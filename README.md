@@ -1,61 +1,93 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Kuu Project
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+このプロジェクトはDocker Composeを使用して、Laravel、Apache、MySQL、phpMyAdminの環境を簡単に構築できるようにしたものです。
 
-## About Laravel
+## 構成
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+このプロジェクトは以下の3つのサービスで構成されています：
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- **app**: Laravel + Apache が動作するアプリケーションサービス
+- **db**: MySQL 8.0 データベースサービス
+- **phpmyadmin**: データベース管理用のphpMyAdminサービス
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## 必要条件
 
-## Learning Laravel
+- Docker Engine
+- Docker Compose
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## 使用方法
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+### 1. 環境のセットアップと起動
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+プロジェクトのルートディレクトリで以下のコマンドを実行してください：
 
-## Laravel Sponsors
+```bash
+docker-compose up -d
+```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+これにより、バックグラウンドでコンテナが起動します。
 
-### Premium Partners
+### 2. アクセス方法
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development/)**
-- **[Active Logic](https://activelogic.com)**
+- **Laravel アプリケーション**: http://localhost:8000
+- **phpMyAdmin**: http://localhost:8080
+  - ユーザー名: root
+  - パスワード: hoge
 
-## Contributing
+### 3. データベース情報
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+- **データベース名**: kuu_db
+- **ユーザー名**: root
+- **パスワード**: hoge
+- **ホスト**: db (コンテナ内からの接続時)
+- **ホスト**: localhost:3306 (ホストマシンからの接続時)
 
-## Code of Conduct
+### 4. コンテナの停止
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+```bash
+docker-compose down
+```
 
-## Security Vulnerabilities
+バックグラウンドで実行中のコンテナを停止します。
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### 5. コンテナとボリュームの削除
 
-## License
+```bash
+docker-compose down -v
+```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+データベースの永続化ボリュームも含めて、すべてのコンテナとデータを削除します。
+
+## ボリュームについて
+
+データベースのデータは名前付きボリューム `db-data` に永続化されます。このため、コンテナを再起動してもデータは保持されます。
+
+## カスタマイズ
+
+設定を変更する場合は、`docker-compose.yml` ファイルを編集してください。主な変更点：
+
+- ポート番号
+- データベース名
+- パスワード
+- マウントボリューム
+
+変更後は以下のコマンドで環境を再構築してください：
+
+```bash
+docker-compose down
+docker-compose up -d --build
+```
+
+## トラブルシューティング
+
+### ポートの競合
+
+もし8000、3306、または8080ポートが既に使用されている場合は、`docker-compose.yml`ファイルの`ports`セクションで別のポート番号に変更できます。
+
+### 起動しない場合
+
+```bash
+docker-compose logs
+```
+
+でログを確認して問題を特定してください。
