@@ -1,0 +1,43 @@
+version: '3.8'  # Docker Compose のバージョン。3.8は安定していて機能も豊富。
+
+services:  # ここから複数の「サービス（コンテナ）」を定義していく。
+
+  app:  # Laravel + Apache を動かすアプリケーションのサービス
+    build:  # Dockerfileからこのサービスのイメージをビルドする設定
+      context: .  # ビルドに使うディレクトリ（現在のディレクトリ）
+      dockerfile: Dockerfile  # 使用する Dockerfile のファイル名
+    container_name: kuu_app  # 作成されるコンテナの名前（任意）
+    ports:
+      - "8000:80"  # ホストの8000番ポート → コンテナのApacheの80番ポートに接続
+    volumes:
+      - .:/var/www/html  # ホストのカレントディレクトリを、コンテナのLaravel配置先にマウント
+    depends_on:
+      - db  # このサービスは「db」サービス（MySQL）が起動してから動くようにする依存関係
+    command: bash -c "npm install && apache2-foreground"
+
+  db:  # データベース（MySQL）のサービス
+    image: mysql:8.0  # Docker Hub から MySQL 8.0 の公式イメージを使う
+    container_name: kuu_db  # DBコンテナの名前
+    restart: always  # 停止しても常に自動再起動する設定（サーバー再起動時にも便利）
+    ports:
+      - "3306:3306"  # ホストの3306番ポート → コンテナのMySQLの3306番ポートに接続
+    environment:  # MySQLの初期設定用環境変数
+      MYSQL_DATABASE: kuu_db  # 初期作成するデータベース名
+      MYSQL_ROOT_PASSWORD: hoge  # rootユーザーのパスワード
+    volumes:
+      - db-data:/var/lib/mysql  # データベースのデータを永続化するためのボリューム
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: kuu_phpmyadmin
+    restart: always
+    ports:
+      - "8080:80"  # ブラウザから http://localhost:8080 でアクセス
+    environment:
+      PMA_HOST: db         # MySQLコンテナのサービス名
+      PMA_PORT: 3306
+      PMA_USER: root
+      PMA_PASSWORD: hoge
+
+volumes:  # ボリューム定義セクション（永続データ領域）
+  db-data:  # MySQLのデータが保存される名前付きボリューム
