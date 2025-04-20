@@ -28,7 +28,11 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->intended(route('dashboard', absolute: false));
+        // ログイン状態であるかチェックする
+        $isLogin = Auth::check();
+
+        // ログイン後にリダイレクトするURLを指定
+        return redirect()->route('index', compact(['isLogin']));
     }
 
     /**

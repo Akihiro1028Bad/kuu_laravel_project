@@ -1,0 +1,784 @@
+/* CSS Reset */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* 変数 */
+:root {
+    --primary-color: #003366;
+    /* 藍色 */
+    --secondary-color: #8FBC8F;
+    /* 抹茶色 */
+    --text-color: #333;
+    --background-color: #fff;
+    /* 背景色を白に変更 */
+    --accent-color: #E64A19;
+    /* オレンジ */
+}
+
+/* 基本スタイル */
+body {
+    font-family: 'Noto Sans JP', sans-serif, 'M PLUS 1p', sans-serif;
+    font-weight: 400;
+    line-height: 1.6;
+    color: var(--text-color);
+    background-color: var(--background-color);
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* コンテナ */
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* ヘッダー */
+header {
+    text-align: center;
+    padding: 30px 0;
+    border-bottom: 2px solid var(--secondary-color);
+}
+
+header h1 {
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: var(--primary-color);
+}
+
+header p {
+    font-size: 1rem;
+    color: #777;
+}
+
+/* メインコンテンツ */
+main {
+    margin-bottom: 30px;
+}
+
+/* セクション */
+.section {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 12px;
+    margin-bottom: 30px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.section:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    /* hover時に影を強く */
+}
+
+.section h2 {
+    font-size: 1.7rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--accent-color);
+}
+
+/* リスト */
+.styled-list {
+    list-style: none;
+    padding-left: 0;
+}
+
+.styled-list li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    font-size: 1rem;
+}
+
+.styled-list li i {
+    margin-right: 10px;
+    color: var(--secondary-color);
+    width: 24px;
+    text-align: center;
+}
+
+/* サブセクション */
+.subsection {
+    margin-bottom: 20px;
+}
+
+.subsection h3 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin-bottom: 10px;
+}
+
+/* 例 */
+.example-title {
+    font-weight: bold;
+    color: var(--accent-color);
+    margin-top: 15px;
+    margin-bottom: 5px;
+}
+
+/* フッター */
+footer {
+    text-align: center;
+    padding: 30px 0;
+    font-size: 0.8rem;
+    color: #999;
+}
+
+/* ローディングアニメーション */
+#loading-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--background-color);
+    /* 背景色を白に設定 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    opacity: 1;
+    transition: opacity 0.5s ease-out, visibility 0.5s ease-out;
+}
+
+#loading-screen.hidden {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.kuu-animation {
+    font-size: 3.5rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    /* 文字色を藍色に設定 */
+    display: flex;
+}
+
+.char {
+    opacity: 0;
+    /* 初期状態では非表示 */
+    animation: fadeInChar 1s ease-in-out forwards;
+    /* フェードインアニメーション */
+}
+
+.char:nth-child(2) {
+    animation-delay: 0.3s;
+}
+
+.char:nth-child(3) {
+    animation-delay: 0.6s;
+}
+
+.char:nth-child(4) {
+    animation-delay: 0.9s;
+}
+
+.char:nth-child(5) {
+    animation-delay: 1.2s;
+}
+
+/* keyframes */
+@keyframes fadeInChar {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Utility class */
+.fade-in {
+    animation: fadeIn 0.8s ease-out both;
+}
+
+/* レスポンシブデザイン */
+@media (max-width: 1500px) {
+    .container {
+        padding: 10px;
+    }
+
+    header h1 {
+        font-size: 2rem;
+    }
+
+    .section {
+        padding: 20px;
+    }
+
+    .section h2 {
+        font-size: 1.4rem;
+    }
+
+    .styled-list li {
+        font-size: 0.9rem;
+    }
+
+   /* くぅーボタンセクションのスタイル */
+   #kuu-button-section {
+        text-align: center;
+        padding: 50px;
+        /* パディングを大きく */
+        background-color: #f0f0f0;
+        /* 背景色を少し変更 */
+        border-radius: 15px;
+        /* 角を丸く */
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        /* 影を大きく */
+        position: relative;
+        /* パーティクル表示の基準位置 */
+        overflow: hidden;
+
+        display: flex; /* Flexboxを使用 */
+        flex-direction: column; /* 縦方向に要素を並べる */
+        align-items: center; /* 水平方向中央揃え */
+    }
+
+    /* レベル、称号などのスタイル */
+    #kuu-button-section .status-display {
+        font-size: 1.2rem;
+        margin-top: 15px;
+        color: #555;
+        display: flex;
+        /* Flexboxを使用 */
+        align-items: center;
+        /* 垂直方向中央揃え */
+        justify-content: center;
+        /* 水平方向中央揃え */
+        text-align: center;
+    }
+
+    #kuu-button-section .status-display i {
+        margin-right: 8px;
+        /* アイコンとテキストの間隔 */
+        color: var(--secondary-color);
+        /* アイコンの色 */
+        font-size: 1.4rem;
+        /* アイコンのサイズ */
+    }
+
+    #kuu-button-section .status-display span {
+        font-family: 'M PLUS Rounded 1c', sans-serif;
+        /* 丸ゴシック体に変更 */
+        font-weight: bold;
+        /* 太字 */
+        color: var(--primary-color);
+        /* メインカラー */
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+        /* 文字に影を追加 */
+    }
+
+    #kuu-button-section p {
+        font-size: 1.2rem;
+        margin-top: 10px;
+        color: #555;
+    }
+
+    #kuu-button {
+        font-size: 1.5rem;
+        /* ボタンのフォントサイズをさらに小さく */
+        padding: 15px 30px; /* パディングを大きく */
+        background-color: var(--accent-color);
+        color: #fff;
+        border: none;
+        border-radius: 15px;
+        /* 角を丸く */
+        cursor: pointer;
+        transition: all 0.2s ease-in-out;
+        /* トランジションを滑らかに */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        /* 影を追加 */
+        font-family: 'M PLUS 1p', sans-serif;
+        /* 少しPOPなフォントに変更 */
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        /* 文字に影を追加 */
+        position: relative;
+        /* 疑似要素の基準位置 */
+        overflow: hidden;
+        /* 範囲外を隠す */
+        position: relative;
+        /* z-indexを有効にするために必要 */
+        z-index: 2;
+        /* Canvasよりも背面に表示 */
+    }
+
+    /* レベルアップ時のアニメーション */
+    @keyframes levelUp {
+        0% {
+            transform: scale(1);
+            opacity: 1;
+        }
+
+        50% {
+            transform: scale(1.2);
+            opacity: 0.8;
+        }
+
+        100% {
+            transform: scale(1);
+            opacity: 1;
+        }
+    }
+
+    .level-up-animation {
+        animation: levelUp 0.5s ease-in-out;
+    }
+
+    /* ボタン押下時のアニメーション */
+    #kuu-button:hover {
+        transform: scale(1.1);
+        /* 少し拡大 */
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5);
+        /* 影を強調 */
+    }
+
+    #kuu-button:active {
+        transform: scale(0.95); /* ほんの少し縮小 */
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        /* 影を弱める */
+    }
+
+    #reset-button:active {
+        transform: scale(0.95); /* ほんの少し縮小 */
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        /* 影を弱める */
+    }
+
+    /* 疑似要素でリップルエフェクト */
+    #kuu-button::after {
+        content: "";
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(255, 255, 255, 0.3);
+        /* 白色の半透明 */
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        border-radius: 50%;
+        transform: scale(5);
+        /* 大きく拡大 */
+        pointer-events: none;
+        /* イベントを透過 */
+    }
+
+    #kuu-button:active::after {
+        opacity: 1;
+        /* 表示 */
+        transition: opacity 0s ease;
+        /* 即時 */
+    }
+
+    /* 無効化されたボタンのスタイル */
+    #kuu-button:disabled {
+        cursor: not-allowed; /* カーソルを押せないマークに変更 */
+        opacity: 0.5; /* 透明度を下げて無効化を強調 */
+        transform: none !important; /* ホバーやクリック時の拡大を無効化 */
+        box-shadow: none !important; /* 影を消す */
+    }
+
+    /* :disabled の場合は疑似要素のリップルエフェクトも無効化 */
+    #kuu-button:disabled::after {
+        display: none; /* エフェクトを表示させない */
+    }
+
+    #kuu-text {
+        font-weight: 900;
+        animation: pulse 1s infinite alternate;
+        font-size: 9rem;
+        /* テキストのフォントサイズをさらに大きく */
+        margin-top: 10px;
+        /* マージンを調整 */
+        color: var(--accent-color);
+        /* テキストの色を変更 */
+        text-shadow: 4px 4px 6px rgba(0, 0, 0, 0.6);
+        /* シャドウをさらに強く */
+        letter-spacing: 0.2rem;
+        /* 文字間隔を少し広げる */
+    }
+
+    /* パルスアニメーション */
+    @keyframes pulse {
+        0% {
+            transform: scale(1);
+        }
+
+        100% {
+            transform: scale(1.1);
+        }
+    }
+
+    /* レベル、称号などのスタイル */
+    #kuu-button-section p {
+        font-size: 1.2rem;
+        margin-top: 10px;
+        color: #555;
+    }
+
+    /* リセットボタンのスタイル */
+    #reset-button {
+        padding: 15px 30px;
+        /* パディングを大きく */
+        background-color: #ddd;
+        border: none;
+        border-radius: 10px;
+        /* 角を丸く */
+        cursor: pointer;
+        margin-top: 30px;
+        /* マージンを大きく */
+        transition: background-color 0.3s ease;
+        /* トランジションを追加 */
+        font-size: 1.1rem;
+        /* フォントサイズを少し大きく */
+    }
+
+    #reset-button:hover {
+        background-color: #bbb;
+        /* ホバー時に色を変更 */
+    }
+
+    /* 発音ボタンのスタイル（モバイル向け） */
+    .pronunciation-button {
+        background-color: #3CB371; /* 背景色を濃い緑色にする */
+        color: #fff; /* 文字色を白にする */
+        border: none; /* 枠線を消す */
+        padding: 12px 24px; /* パディング（余白）を大きくする */
+        border-radius: 12px; /* 角を丸くする */
+        cursor: pointer; /* カーソルをポインター（指マーク）にする */
+        font-size: 1rem; /* フォントサイズを大きくする */
+        transition: background-color 0.3s ease; /* ホバー時のアニメーションを追加 */
+        margin-left: 10px; /* IPA表記との間隔を調整 */
+        box-shadow: 3px 3px 7px rgba(0, 0, 0, 0.2); /* 影を追加 */
+        -webkit-tap-highlight-color: transparent; /* タップ時のハイライトを消す（iOS） */
+        -webkit-appearance: none; /* デフォルトスタイルをリセット */
+        display: inline-flex; /* アイコンとテキストを横並びにする */
+        align-items: center; /* 垂直方向に中央揃え */
+        justify-content: center; /* 水平方向に中央揃え */
+    }
+
+    .pronunciation-button:hover {
+        background-color: #6B8E23; /* ホバー時の背景色を少し濃くする */
+    }
+
+    .pronunciation-button:active {
+        transform: scale(0.95); /* タップ時に少し縮小 */
+        box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3); /* タップ時に影を弱める */
+    }
+
+    .pronunciation-button i {
+        margin-right: 8px; /* アイコンとテキストの間隔を調整 */
+        font-size: 1.2rem; /* アイコンのサイズを大きくする */
+    }
+
+    .pronunciation-button:active {
+        background-color: #558B2F; /* タップ時に背景色を少し暗くする */
+        transform: scale(0.95); /* タップ時に少し縮小 */
+        box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3); /* タップ時に影を弱める */
+    }
+
+    .level-up-popup {
+        position: fixed; /* 画面に固定 */
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%); /* 中央配置 */
+        background-color: rgba(0, 0, 0, 0.8); /* 半透明の黒 */
+        color: white; /* 文字色を白に */
+        padding: 20px;
+        border-radius: 10px;
+        z-index: 1001; /* 他の要素よりも前面に表示 */
+        font-size: 1.5rem;
+        font-weight: bold;
+        text-align: center;
+        opacity: 0; /* 初期状態では非表示 */
+        visibility: hidden;
+        transition: opacity 0.3s ease-out, visibility 0.3s ease-out; /* スムーズな非表示のため */
+    }
+    
+    @keyframes popup-jump {
+        0% {
+            opacity: 0;
+            visibility: visible;
+            transform: translate(-50%, -40%); /* 少し上に配置 */
+        }
+        50% {
+            opacity: 1;
+            transform: translate(-50%, -55%); /* 一番上に跳ね上がる */
+        }
+        100% {
+            opacity: 1;
+            transform: translate(-50%, -50%); /* 元の位置に戻る */
+        }
+    }
+    
+    .level-up-popup.hidden {
+        opacity: 0;
+        visibility: hidden;
+    }
+
+    .level-up-popup.active {
+        visibility: visible;
+        opacity: 1;
+        animation: popup-jump 0.5s ease-out;
+    }
+
+    /* パーティクルCanvasのスタイル */
+    #particle-canvas {
+        position: absolute;
+        top: 0;
+        left: 0;
+        pointer-events: none;
+        /* イベントを透過 */
+        z-index: 1;
+        /* ボタンよりも前面に表示 */
+    }
+
+    /* ログインしていない時の表示 */
+    .not-logged-in {
+        background-color: #f8f9fa; /* 優しいグレーの背景色 */
+        border: 2px dashed #6c757d; /* ダッシュの枠線で軽い印象 */
+        border-radius: 10px; /* 角を丸くする */
+        padding: 20px;
+        text-align: center;
+        margin: 20px auto;
+        max-width: 600px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 軽い影を追加 */
+    }
+
+    .not-logged-in .notice {
+        font-size: 1.2rem;
+        font-weight: bold;
+        color: #dc3545; /* 赤系の色で注意を強調 */
+        margin-bottom: 15px;
+    }
+
+    .not-logged-in .btn {
+        display: inline-block;
+        background-color: #007bff; /* ブルーのボタン */
+        color: #fff;
+        padding: 10px 20px;
+        border-radius: 5px;
+        text-decoration: none;
+        font-weight: bold;
+        transition: background-color 0.3s ease;
+    }
+
+    .not-logged-in .btn:hover {
+        background-color: #0056b3; /* ホバー時に濃いブルー */
+    }
+
+    .not-logged-in .register-prompt {
+        font-size: 1rem;
+        color: #6c757d; /* 落ち着いたグレー */
+        margin-top: 15px;
+    }
+
+    .not-logged-in .register-link {
+        color: white; /* 緑色でリンクを目立たせる */
+        font-weight: bold;
+        text-decoration: none;
+        transition: color 0.3s ease;
+    }
+
+    
+
+    /* 登録ページのスタイル */
+    .styled-form {
+        max-width: 500px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #f8f9fa;
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    .form-label {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 5px;
+        color: #333;
+    }
+
+    .form-input {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 1rem;
+    }
+
+    .form-input:focus {
+        border-color: #007bff;
+        outline: none;
+        box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+    }
+
+    .form-error {
+        color: #dc3545;
+        font-size: 0.875rem;
+        margin-top: 5px;
+    }
+
+    .form-actions {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 20px;
+    }
+
+    .btn-link {
+        color: #007bff;
+        text-decoration: none;
+        font-size: 0.875rem;
+    }
+
+    .btn-link:hover {
+        text-decoration: underline;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        color: #fff;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .btn-primary:hover {
+        background-color: #0056b3;
+    }
+
+    /* ログインページのスタイル */
+    .styled-form {
+        max-width: 500px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #f8f9fa;
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    .form-label {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 5px;
+        color: #333;
+    }
+
+    .form-input {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 1rem;
+    }
+
+    .form-input:focus {
+        border-color: #007bff;
+        outline: none;
+        box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+    }
+
+    .form-checkbox {
+        margin-right: 10px;
+    }
+
+    .form-error {
+        color: #dc3545;
+        font-size: 0.875rem;
+        margin-top: 5px;
+    }
+
+    .form-actions {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 20px;
+    }
+
+    .btn-link {
+        color: #007bff;
+        text-decoration: none;
+        font-size: 0.875rem;
+    }
+
+    .btn-link:hover {
+        text-decoration: underline;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        color: #fff;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .btn-primary:hover {
+        background-color: #0056b3;
+    }
+
+    /* アカウント作成ボタンのスタイル */
+    .register-prompt {
+        text-align: center;
+        margin-top: 20px;
+        font-size: 1rem;
+        color: #6c757d;
+    }
+
+    .register-prompt a {
+        display: inline-block;
+        margin-top: 10px;
+        padding: 10px 20px;
+        background-color: #28a745; /* 緑色のボタン */
+        color: #fff;
+        text-decoration: none;
+        border-radius: 5px;
+        font-weight: bold;
+        transition: background-color 0.3s ease;
+    }
+
+    .register-prompt a:hover {
+        background-color: #218838; /* ホバー時に濃い緑色 */
+    }
+}
