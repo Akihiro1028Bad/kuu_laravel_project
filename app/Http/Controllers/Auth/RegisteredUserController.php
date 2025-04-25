@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\UserKuuStatus;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -14,6 +15,21 @@ use Illuminate\View\View;
 
 class RegisteredUserController extends Controller
 {
+    /**
+     * @var UserKuuStatus
+     */
+    protected $userKuuStatus;
+
+    /**
+     * コンストラクタ
+     *
+     * @var model
+     */
+    public function __construct(UserKuuStatus $userKuuStatus)
+    {
+        $this->userKuuStatus = $userKuuStatus;
+    }
+
     /**
      * Display the registration view.
      */
@@ -44,6 +60,11 @@ class RegisteredUserController extends Controller
         event(new Registered($user));
 
         Auth::login($user);
+
+        // ユーザーのkuu_statusを登録
+        $this->userKuuStatus->insertKuuStatus($user->id);
+        // ログイン状態であるかチェックする
+        $isLogin = Auth::check();
 
         // ログイン後にリダイレクトするURLを指定
         return redirect()->route('index', compact(['isLogin']));
