@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>くぅー（kuuー）— 公式ドキュメント</title>
     <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
     <script src="{{ asset('js/script.js') }}"></script>
@@ -68,7 +69,7 @@
                         <li><i class="fas fa-info-circle"></i> 音声的特徴：発音の長さで感情が変化</li>
                     </ul>
                 </div>
-                <audio id="pronunciation-audio" src="kuu7.mp3" preload="auto"></audio>
+                <audio id="pronunciation-audio" src="{{ asset('audio/kuu7.mp3') }}" preload="auto"></audio>
             </section>
 
             <section id="meaning" class="section">
@@ -205,3 +206,274 @@
 </body>
 
 </html>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    // DBからユーザーのレベル、押下回数等を取得する
+    const levelObj = @json($userLevelStatus);
+    const userId = levelObj? levelObj.user_id : 0;
+    let level = levelObj? levelObj.kuu_level: 0;
+    let count = levelObj? levelObj.kuu_count: 0;
+    let title = levelObj? levelObj.level_title.name: 'くぅー見習い';
+    
+    const levelUpThreshold = 3; // レベルアップに必要な回数
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const loadingScreen = document.getElementById('loading-screen');
+        const levelUpPopup = document.getElementById('level-up-popup');
+        levelUpPopup.classList.add('hidden');
+
+        // ローディング画面を非表示
+        setTimeout(() => {
+            loadingScreen.classList.add('hidden');
+
+            // フェードインアニメーション
+            const sections = document.querySelectorAll('.section');
+            sections.forEach((section, index) => {
+                setTimeout(() => {
+                    section.classList.add('fade-in');
+                }, 200 * index);
+            });
+
+        }, 2500);
+
+        // くぅーボタンの機能
+        const kuuButton        = document.getElementById('kuu-button');
+        const kuuText          = document.getElementById('kuu-text');
+        const resetButton      = document.getElementById('reset-button');
+        const levelDisplay     = document.getElementById('level');
+        const titleDisplay     = document.getElementById('title');
+        const countDisplay     = document.getElementById('count');
+        const nextLevelDisplay = document.getElementById('next-level'); // 追加
+        
+        const playPronunciationButton = document.getElementById('play-pronunciation');
+        const pronunciationAudio = document.getElementById('pronunciation-audio');
+
+        playPronunciationButton.addEventListener('click', function() {
+
+            // 再生開始時の処理
+            pronunciationAudio.onplay = function() {
+                console.log("再生開始");
+                // ここに再生開始時の処理を追加
+                // ボタンを無効化し、テキストを「再生中」に変更
+                playPronunciationButton.disabled = true;
+                playPronunciationButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 再生中...';
+            };
+
+            // 再生終了時の処理
+            pronunciationAudio.onended = function() {
+                console.log("再生終了");
+                // ここに再生終了時の処理を追加
+                playPronunciationButton.disabled = false;
+                playPronunciationButton.innerHTML = '<i class="fas fa-play-circle"></i>発音を聞く';
+            };
+            pronunciationAudio.play();
+        });
+
+        const kuuVariations = [
+            "くぅー",
+            "くぅ～～！",
+            "クゥー…",
+            "Ku-",
+            "くううううう",
+            "くぅっ！",
+            "くぅ？",
+        ];
+
+        // 初期表示
+        function updateDisplay() {
+            levelDisplay.textContent = level;
+            countDisplay.textContent = count;
+            titleDisplay.textContent = title;
+            nextLevelDisplay.textContent = levelUpThreshold - (count % levelUpThreshold); // 次のレベルまでの回数を計算
+        }
+
+        // くぅーボタンがクリックされた時の処理
+        kuuButton.addEventListener('click', function() {
+            dbUpdateKuuCount(userId, count); // DBに連打数を更新
+            updateKuuText();
+            playRandomKuuSound(); // ランダムな効果音を再生
+
+        });
+
+        function updateKuuText() {
+            const randomIndex = Math.floor(Math.random() * kuuVariations.length);
+            kuuText.textContent = kuuVariations[randomIndex];
+        }
+
+        function levelUp() {
+            level++;
+            if (level <= titles.length) {
+                title = titles[level - 1];
+            } else {
+                title = "伝説のくぅー";
+            }
+        
+            // ポップアップのテキストを設定
+            const levelUpMessage = document.getElementById('level-up-message');
+            levelUpMessage.innerHTML = `レベルアップ！<br/>称号: ${title}`;
+
+            // ポップアップを表示
+            const levelUpPopup = document.getElementById('level-up-popup');
+            levelUpPopup.classList.remove('hidden');
+            levelUpPopup.classList.add('active');
+            levelUpPopup.style.visibility = "visible";
+            levelUpPopup.style.opacity = "1";
+            levelUpPopup.style.animation = "popup-jump 0.5s ease-out";
+
+            // アニメーションが終わった後に非表示にする
+            setTimeout(() => {
+                levelUpPopup.style.opacity = "0";
+                levelUpPopup.style.visibility = "hidden";
+                levelUpPopup.classList.remove('active');
+            }, 1000); // 2秒後に非表示
+        }
+
+        // 効果音を再生する関数（ランダム）
+        function playRandomKuuSound() {
+            const sound        = document.getElementById('kuuSound');
+            const sources      = sound.getElementsByTagName('source');
+            const randomIndex  = Math.floor(Math.random() * sources.length);
+            const randomSource = sources[randomIndex];
+
+            // 新しいsourceをaudio要素に設定し、再生
+            sound.src = randomSource.src;
+            sound.load(); // 読み込み
+
+            // 再生開始時の処理
+            sound.onplay = function() {
+                // ここに再生開始時の処理を追加
+                kuuButton.disabled = true;
+                kuuButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i>くぅー中...'
+            };
+
+            // 再生終了時の処理
+            sound.onended = function() {
+                // ここに再生終了時の処理を追加
+                kuuButton.disabled = false;
+                kuuButton.innerHTML = 'くぅーする'
+            };
+
+            sound.play();  // 再生
+        }
+
+        // リセットボタンがクリックされた時の処理
+        resetButton.addEventListener('click', function() {
+            if (confirm("リセットしますか？")) {
+                level = 1; // レベルを初期化
+                count = 0; // 連打数を初期化
+                title = "くぅー見習い"; // 称号を初期化
+                levelUpThreshold = 5; // レベルアップに必要な回数を初期化
+                kuuVariations.length = 8; // 初期状態のバリエーションに戻す
+                updateDisplay(); // 表示を更新
+                kuuText.textContent = "くぅー"; // くぅーテキストを初期化
+            }
+        });
+
+        updateDisplay(); // 初期表示
+    });
+
+    function dbUpdateKuuCount(userId)
+    {
+        const url = "{{route('top.countUp', 'USERID')}}".replace('USERID', userId);
+        const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+        const data = {
+            user_id: userId,
+        };
+
+        // fetchを使ってDBに連打数を更新する
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',  // レスポンス形式を指定
+                'X-CSRF-TOKEN': token,  // CSRFトークンをヘッダーに追加
+            },
+            body: JSON.stringify(data)
+            }).then(response => {
+                if (!response.ok) {
+                    // 2xx以外のHTTPステータス（例：400, 500など）
+                    throw new Error(`HTTPエラー: ${response.status}`);
+                }
+                return response.json();  // レスポンスをJSONとして処理
+            }).then(data => {
+                console.log('成功しました！受信データ:', data); // デバック用
+                const newKuuCount = data.kuu_count; 
+                const kuuCountTextEl = document.querySelector('#count');
+                const nextLevelCountTextEl = document.querySelector('#next-level');
+                if (kuuCountTextEl) {
+                    kuuCountTextEl.textContent = newKuuCount; // 連打数を更新
+                }
+                // レベルアップするかどうかの判定
+                if (newKuuCount % levelUpThreshold === 0) {
+                    dbLevelUp(userId);
+                }
+                if (nextLevelCountTextEl) {
+                    // 次のレベルまでの回数を更新
+                    nextLevelCountTextEl.textContent = levelUpThreshold - (newKuuCount % levelUpThreshold);
+                }
+
+            }).catch(error => {
+                console.error('エラーが発生しました:', error);
+            });
+    }
+
+    function dbLevelUp(userId)
+    {
+        const url = "{{route('top.levelUp', 'USERID')}}".replace('USERID', userId);
+        const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+        const data = {
+            user_id: userId,
+            level: level,
+            title: title,
+        };
+
+        // fetchを使ってDBにレベルアップを更新する
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',  // レスポンス形式を指定
+                'X-CSRF-TOKEN': token,  // CSRFトークンをヘッダーに追加
+            },
+            body: JSON.stringify(data)
+            }).then(response => {
+                if (!response.ok) {
+                    // 2xx以外のHTTPステータス（例：400, 500など）
+                    throw new Error(`HTTPエラー: ${response.status}`);
+                }
+                return response.json();  // レスポンスをJSONとして処理
+            }).then(data => {
+                console.log('成功しました！受信データ:', data); // デバック用
+
+                const newKuuLevel = data.level; 
+                const newKuuTitle = data.level_title; 
+                const kuuLevelTextEl = document.querySelector('#level');
+                const kuuLevelTitleEl = document.querySelector('#title');
+                
+                if (kuuLevelTextEl) {
+                    kuuLevelTextEl.textContent = newKuuLevel; // レベル数を更新
+                }
+                if (kuuLevelTitleEl) {
+                    kuuLevelTitleEl.textContent = newKuuTitle; // 称号を更新
+                }
+
+                // SweetAlert2を使用してレベルアップモーダルを表示する
+                Swal.fire({
+                    title: '🎉 レベルアップ！ 🎉',
+                    html: `
+                        <p>新しいレベル: <strong>${newKuuLevel}</strong></p>
+                        <p>新しい称号: <strong>${newKuuTitle}</strong></p>
+                    `,
+                    icon: 'success',
+                    confirmButtonText: '閉じる',
+                    customClass: {
+                        popup: 'swal2-custom-popup',
+                        confirmButton: 'swal2-custom-button'
+                    }
+                });
+                
+            }).catch(error => {
+                console.error('エラーが発生しました:', error);
+            });
+    }
+</script>
