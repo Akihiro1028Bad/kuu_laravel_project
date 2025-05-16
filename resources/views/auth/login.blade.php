@@ -12,16 +12,9 @@
 
 <body>
     <div class="container">
-        <header>
-            <h1>くぅー（kuuー）</h1>
-            <p>ログイン</p>
-        </header>
-
         <main>
             <section id="login-section" class="section">
-                <h2>🔑 ログイン 🔑</h2>
-                <p>以下のフォームに必要事項を入力して、くぅーの世界に戻りましょう！</p>
-
+                <h2>ログイン</h2>
                 <form method="POST" action="{{ route('login') }}" class="styled-form">
                     @csrf
 

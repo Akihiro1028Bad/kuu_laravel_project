@@ -12,15 +12,9 @@
 
 <body>
     <div class="container">
-        <header>
-            <h1>くぅー（kuuー）</h1>
-            <p>アカウント登録</p>
-        </header>
-
         <main>
             <section id="register-section" class="section">
-                <h2>🎉 新規登録 🎉</h2>
-                <p>以下のフォームに必要事項を入力して、くぅーの世界に参加しましょう！</p>
+                <h2>新規登録</h2>
 
                 <form method="POST" action="{{ route('register') }}" class="styled-form">
                     @csrf
