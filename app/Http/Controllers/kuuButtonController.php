@@ -14,7 +14,7 @@ use App\Models\UserKuuStatus;
 use App\Http\Requests\Top\KuuCountAddRequest;
 use App\Http\Requests\Top\KuuLevelAddRequest;
 
-class TopDocumentController extends Controller
+class kuuButtonController extends Controller
 {
     protected $levelModel;
     protected $userModel;
@@ -28,7 +28,6 @@ class TopDocumentController extends Controller
         $this->userKuuStatusModel = $userKuuStatusModel;
     }
     
-    // トップドキュメントを表示
     public function index()
     {
         // 現在ログインしているかを判定
@@ -43,7 +42,7 @@ class TopDocumentController extends Controller
             $userLevelStatus = $this->userKuuStatusModel->getKuuStatusByUserId($user->id);
         }
 
-        return view('top', compact(['isLogin', 'userLevelStatus']));
+        return view('kuu_button', compact(['isLogin', 'userLevelStatus']));
     }
 
     // クゥーボタン押下時にカウントを更新

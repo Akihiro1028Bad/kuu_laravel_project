@@ -75,4 +75,17 @@ class UserKuuStatus extends Model
 
         return $this->save();
     }
+
+    /**ランキングリストを取得するメソッド
+     *
+     * @param int $limit
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function getRankingList($limit = 5)
+    {
+        return $this->with(['user', 'levelTitle'])
+            ->orderBy('kuu_count', 'desc')
+            ->limit($limit)
+            ->get();
+    }
 }

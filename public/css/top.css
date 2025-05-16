@@ -1,0 +1,564 @@
+/* --- Modern CSS Reset --- */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+html {
+    scroll-behavior: smooth; /* スムーズスクロール */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* --- Color Variables (既存を参考に調整) --- */
+:root {
+    --primary-color: #003366; /* 藍色 (維持) */
+    --secondary-color: #6B8E23; /* 少し落ち着いた抹茶色 */
+    --accent-color: #E64A19; /* オレンジ (維持) */
+    --light-gray: #f3f4f6;
+    --medium-gray: #e5e7eb;
+    --dark-gray: #4b5563;
+    --text-color: #374151; /* 少し柔らかい黒 */
+    --white: #ffffff;
+    --background-color: #fdfdfd; /* bodyの背景色と同じにする */
+}
+
+/* --- Loading Screen --- */
+#loading-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--background-color); /* 背景色 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000; /* 最前面 */
+    opacity: 1;
+    /* ↓ 0.5秒かけてフェードアウトし、フェードアウト後に非表示(visibility: hidden)になる */
+    transition: opacity 0.5s ease-out, visibility 0s linear 0.5s;
+}
+
+#loading-screen.hidden {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.kuu-animation {
+    font-size: 3.5rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    display: flex;
+    font-family: 'Poppins', sans-serif; /* ローディングにも適用 */
+}
+
+.char {
+    opacity: 0;
+    animation: fadeInChar 0.6s ease-in-out forwards; /* アニメーション時間を少し短縮 */
+}
+.char:nth-child(1) { animation-delay: 0.1s; } /* 遅延開始を少し早める */
+.char:nth-child(2) { animation-delay: 0.3s; }
+.char:nth-child(3) { animation-delay: 0.5s; }
+.char:nth-child(4) { animation-delay: 0.7s; }
+.char:nth-child(5) { animation-delay: 0.9s; }
+
+@keyframes fadeInChar {
+    0% {
+        opacity: 0;
+        transform: translateY(10px); /* 少し下から */
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* --- Base Styles --- */
+body {
+    font-family: 'Poppins', 'Noto Sans JP', sans-serif;
+    font-weight: 400;
+    line-height: 1.7;
+    color: var(--text-color);
+    background-color: var(--background-color);
+    overflow-x: hidden;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    /* ↓ 初期状態はコンテンツを非表示にする（JSで表示）*/
+    /* opacity: 0;
+    transition: opacity 0.5s ease-in; */
+    /* ↑ JSで制御するのでコメントアウト。必要なら戻す */
+}
+
+/* JSでbodyに .loaded クラスが付与されたら表示 */
+/* body.loaded {
+    opacity: 1;
+} */
+
+
+img, picture, video, canvas, svg {
+    display: block;
+    max-width: 100%;
+}
+input, button, textarea, select {
+    font: inherit;
+}
+a {
+    text-decoration: none;
+    color: #005c99;
+    transition: color 0.3s ease;
+}
+a:hover {
+    color: var(--accent-color);
+}
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 700;
+    line-height: 1.2;
+    color: var(--primary-color);
+    font-family: 'Poppins', sans-serif;
+}
+
+/* --- Base Layout --- */
+.container {
+    width: 90%;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+.main-content {
+   flex-grow: 1;
+    /* ↓ JSでローディング後に表示するために初期は透明に */
+   opacity: 0;
+   transition: opacity 0.6s ease-in;
+}
+
+.main-content.visible {
+    opacity: 1;
+}
+
+
+/* --- Utility Classes --- */
+.text-center { text-align: center; }
+.margin-bottom-sm { margin-bottom: 1rem; }
+.margin-bottom-md { margin-bottom: 2rem; }
+.margin-bottom-lg { margin-bottom: 4rem; }
+.padding-section { padding: 4rem 0; }
+
+/* --- Button Styles (Modern) --- */
+.btn {
+    display: inline-block;
+    padding: 0.8rem 1.8rem;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    font-weight: 600;
+    text-align: center;
+    transition: all 0.3s ease;
+    font-size: 0.95rem;
+    letter-spacing: 0.5px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+.btn:active {
+    transform: translateY(2px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+.btn i { margin-right: 0.5rem; }
+
+.btn-primary {
+    background: linear-gradient(to right, #004080, var(--primary-color));
+    color: var(--white);
+}
+.btn-primary:hover {
+    background: linear-gradient(to right, #003366, #00264d);
+    box-shadow: 0 6px 20px rgba(0, 51, 102, 0.3);
+}
+
+.btn-secondary {
+    background-color: var(--white);
+    color: var(--primary-color);
+    border: 1px solid var(--medium-gray);
+    box-shadow: none;
+}
+.btn-secondary:hover {
+    background-color: var(--light-gray);
+    border-color: var(--dark-gray);
+    color: var(--primary-color);
+}
+
+.btn-accent {
+    background: linear-gradient(to right, #ff6b3b, var(--accent-color));
+    color: var(--white);
+}
+.btn-accent:hover {
+    background: linear-gradient(to right, #e64a19, #c43f15);
+    box-shadow: 0 6px 20px rgba(230, 74, 25, 0.3);
+}
+
+.btn-block {
+    display: block;
+    width: 100%;
+}
+
+/* --- Header --- */
+.site-header {
+    padding: 1rem 0;
+    background-color: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(10px);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    border-bottom: 1px solid var(--medium-gray);
+     /* ↓ JSでローディング後に表示するために初期は透明に */
+    opacity: 0;
+    transition: opacity 0.6s ease-in 0.2s; /* mainより少し遅れて表示 */
+}
+.site-header.visible {
+    opacity: 1;
+}
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 90%;
+    max-width: 600px;
+    margin: 0 auto;
+}
+.site-logo a {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    letter-spacing: -0.5px;
+    font-family: 'Poppins', sans-serif;
+}
+.menu-toggle {
+    background: none;
+    border: none;
+    font-size: 1.6rem;
+    color: var(--primary-color);
+    cursor: pointer;
+    padding: 0.5rem;
+}
+
+/* --- Fullscreen Navigation --- */
+.fullscreen-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 51, 102, 0.98);
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.4s ease, visibility 0s linear 0.4s;
+}
+.fullscreen-nav.active {
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.4s ease;
+}
+.close-nav-btn {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    background: none;
+    border: none;
+    font-size: 2rem;
+    color: var(--white);
+    cursor: pointer;
+}
+.nav-links {
+    list-style: none;
+    text-align: center;
+}
+.nav-links li {
+    margin-bottom: 2rem;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.3s ease 0.1s, transform 0.3s ease 0.1s; /* 少し遅延 */
+}
+.fullscreen-nav.active .nav-links li {
+    opacity: 1;
+    transform: translateY(0);
+}
+.fullscreen-nav.active .nav-links li:nth-child(1) { transition-delay: 0.2s; }
+.fullscreen-nav.active .nav-links li:nth-child(2) { transition-delay: 0.3s; }
+.fullscreen-nav.active .nav-links li:nth-child(3) { transition-delay: 0.4s; }
+.fullscreen-nav.active .nav-links li:nth-child(4) { transition-delay: 0.5s; }
+/* 修正: 新しい項目の遅延時間を他の項目に合わせる */
+.fullscreen-nav.active .nav-links li:nth-child(5) {
+    transition-delay: 0.6s; /* 他の項目と同じ遅延時間に調整 */
+}
+
+.nav-links a {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: var(--white);
+    padding: 0.5rem 1rem;
+    transition: color 0.3s ease;
+    font-family: 'Poppins', sans-serif;
+}
+.nav-links a:hover {
+    color: var(--secondary-color);
+}
+.nav-auth-links {
+    margin-top: 3rem;
+    text-align: center;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.3s ease 0.1s, transform 0.3s ease 0.1s; /* 少し遅延 */
+}
+.nav-auth-links .btn {
+    margin: 0.5rem;
+    background-color: rgba(255, 255, 255, 0.2);
+    color: var(--white);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    box-shadow: none;
+}
+.nav-auth-links .btn:hover {
+     background-color: rgba(255, 255, 255, 0.3);
+}
+.nav-user-info {
+    color: var(--light-gray);
+    margin-bottom: 1rem;
+}
+
+/* --- Hero Section --- */
+.hero-section {
+    padding: 5rem 0;
+    text-align: center;
+    background: linear-gradient(180deg, var(--white) 0%, var(--light-gray) 100%);
+}
+.hero-icon-container {
+    margin-bottom: 2rem;
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+}
+.hero-icon {
+    font-size: 3rem;
+    opacity: 0.7;
+    animation: subtle-bounce 4s ease-in-out infinite;
+}
+.hero-icon.fa-hot-tub { color: var(--accent-color); animation-delay: 0s; }
+.hero-icon.fa-beer-mug-empty { color: var(--secondary-color); animation-delay: 0.5s; }
+.hero-icon.fa-face-grin-stars { color: var(--primary-color); animation-delay: 1s; }
+
+@keyframes subtle-bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+}
+
+.hero-content h1 {
+    font-size: 2.2rem;
+    margin-bottom: 1rem;
+    font-weight: 700;
+    line-height: 1.3;
+}
+.hero-content p {
+    font-size: 1.1rem;
+    color: var(--dark-gray);
+    margin-bottom: 2.5rem;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-weight: 300;
+}
+.hero-buttons .btn {
+    margin: 0.5rem;
+}
+
+/* --- Feature Section --- */
+.feature-section {
+     background-color: var(--white);
+}
+.section-title {
+    text-align: center;
+    font-size: 1.8rem;
+    margin-bottom: 3rem;
+    position: relative;
+    padding-bottom: 0.8rem;
+}
+.section-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50px;
+    height: 3px;
+    background: linear-gradient(to right, var(--secondary-color), var(--accent-color));
+    border-radius: 2px;
+}
+
+.feature-cards-grid {
+    display: grid;
+    gap: 1.5rem;
+}
+.feature-card {
+    background-color: var(--white);
+    padding: 2rem 1.5rem;
+    border-radius: 16px;
+    border: 1px solid var(--medium-gray);
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+.feature-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+}
+.card-icon-wrapper {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    margin: 0 auto 1.5rem auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.8rem;
+}
+.feature-card:nth-child(1) .card-icon-wrapper { background-color: rgba(107, 142, 35, 0.1); color: var(--secondary-color); }
+.feature-card:nth-child(2) .card-icon-wrapper { background-color: rgba(230, 74, 25, 0.1); color: var(--accent-color); }
+.feature-card:nth-child(3) .card-icon-wrapper { background-color: rgba(255, 193, 7, 0.1); color: #FFC107; }
+
+.feature-card h3 {
+    font-size: 1.3rem;
+    margin-bottom: 0.8rem;
+    color: var(--primary-color);
+}
+.feature-card p {
+    color: var(--dark-gray);
+    font-size: 0.95rem;
+    margin-bottom: 1.5rem;
+    font-family: 'Noto Sans JP', sans-serif;
+}
+.feature-card .btn-secondary {
+    font-size: 0.9rem;
+    padding: 0.6rem 1.2rem;
+}
+
+/* --- Ranking Highlight Section --- */
+.ranking-highlight-section {
+    background-color: var(--light-gray);
+}
+.ranking-highlight-container {
+    background-color: var(--white);
+    border-radius: 16px;
+    padding: 1.5rem 1rem;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    border: 1px solid var(--medium-gray);
+    margin-bottom: 2rem;
+}
+.ranking-item-highlight {
+    display: flex;
+    align-items: center;
+    padding: 0.8rem 0.5rem;
+    border-bottom: 1px solid var(--medium-gray);
+}
+.ranking-item-highlight:last-child { border-bottom: none; }
+
+.rank-number-highlight {
+    font-size: 1rem;
+    font-weight: 700;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 1rem;
+    flex-shrink: 0;
+}
+.ranking-item-highlight:nth-child(1) .rank-number-highlight { background-color: #FFD700; color: #4d3a00; }
+.ranking-item-highlight:nth-child(2) .rank-number-highlight { background-color: #C0C0C0; color: #4d4d4d; }
+.ranking-item-highlight:nth-child(3) .rank-number-highlight { background-color: #CD7F32; color: #5a3a17; }
+
+.user-info-highlight {
+    flex-grow: 1;
+    font-weight: 600;
+    color: var(--text-color);
+    font-size: 1rem;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    margin-right: 0.5rem;
+}
+.kuu-count-highlight {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--accent-color);
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+.kuu-count-highlight i {
+    color: #FFC107;
+    margin-right: 0.2rem;
+}
+.ranking-highlight-section .btn-secondary {
+     margin: 0 auto;
+     display: table;
+}
+
+/* --- Login Prompt Section --- */
+.login-prompt-section {
+    padding: 3rem 1.5rem;
+    text-align: center;
+    background-color: var(--white);
+    border-radius: 16px;
+    border: 1px solid var(--medium-gray);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+.login-prompt-section h4 {
+    font-size: 1.2rem;
+    margin-bottom: 1.5rem;
+    color: var(--primary-color);
+    font-weight: 600;
+}
+.prompt-buttons .btn {
+    display: block;
+    width: 100%;
+    max-width: 300px;
+    margin: 1rem auto;
+}
+
+/* --- Footer --- */
+.site-footer {
+    padding: 2rem 1rem;
+    text-align: center;
+    background-color: var(--primary-color);
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.85rem;
+    margin-top: auto;
+     /* ↓ JSでローディング後に表示するために初期は透明に */
+    opacity: 0;
+    transition: opacity 0.6s ease-in 0.4s; /* mainやheaderより更に遅れて表示 */
+}
+.site-footer.visible {
+    opacity: 1;
+}
+
+
+/* --- Scroll Animation --- */
+.fade-in-section {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s cubic-bezier(0.645, 0.045, 0.355, 1), transform 0.8s cubic-bezier(0.645, 0.045, 0.355, 1); /* イージング変更 */
+}
+.fade-in-section.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* main-content の表示制御例 (CSS側で行う場合) */
+.main-content {
+    opacity: 0;
+    transition: opacity 0.5s 0.1s ease-in; /* 少し遅れてフェードイン */
+}
