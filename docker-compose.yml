@@ -8,7 +8,7 @@ services:  # ここから複数の「サービス（コンテナ）」を定義�
       dockerfile: Dockerfile  # 使用する Dockerfile のファイル名
     container_name: kuu_app  # 作成されるコンテナの名前（任意）
     ports:
-      - "8000:80"  # ホストの8000番ポート → コンテナのApacheの80番ポートに接続
+      - "8080:80"  # ホストの8000番ポート → コンテナのApacheの80番ポートに接続
     volumes:
       - .:/var/www/html  # ホストのカレントディレクトリを、コンテナのLaravel配置先にマウント
     depends_on:
