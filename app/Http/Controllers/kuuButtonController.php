@@ -11,8 +11,8 @@ use Illuminate\View\View;
 use App\Models\Level;
 use App\Models\User;
 use App\Models\UserKuuStatus;
-use App\Http\Requests\Top\KuuCountAddRequest;
-use App\Http\Requests\Top\KuuLevelAddRequest;
+use App\Http\Requests\KuuCountAddRequest;
+use App\Http\Requests\KuuLevelAddRequest;
 
 class kuuButtonController extends Controller
 {
