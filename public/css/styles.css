@@ -23,245 +23,140 @@
 /* 基本スタイル */
 body {
     font-family: 'Noto Sans JP', sans-serif, 'M PLUS 1p', sans-serif;
-    font-weight: 400;
-    line-height: 1.6;
+    font-weight: 300;
+    line-height: 1.7;
     color: var(--text-color);
     background-color: var(--background-color);
     overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    font-size: 16px;
 }
 
 /* コンテナ */
 .container {
+    width: 100%;
     max-width: 600px;
     margin: 0 auto;
-    padding: 20px;
+    padding: 0 15px;
 }
 
 /* メインコンテンツ */
 main {
-    margin-bottom: 30px;
+    margin-bottom: 20px;
 }
 
 /* セクション */
 .section {
     background-color: #fff;
-    padding: 30px;
-    border-radius: 12px;
-    margin-bottom: 30px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease;
+    padding: 25px 20px;
+    border-radius: 10px;
+    margin-bottom: 25px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.08);
+    transition: transform 0.2s ease;
 }
 
 .section:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-    /* hover時に影を強く */
+    /* PCでのホバーは維持 */
+    transform: translateY(-3px);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
 }
 
 .section h2 {
-    font-size: 1.7rem;
+    font-size: 1.6rem;
     font-weight: 700;
     color: var(--primary-color);
-    margin-bottom: 20px;
-    padding-bottom: 10px;
+    margin-bottom: 15px;
+    padding-bottom: 8px;
     border-bottom: 2px solid var(--accent-color);
 }
 
-/* リスト */
-.styled-list {
-    list-style: none;
-    padding-left: 0;
-}
-
-.styled-list li {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
-    font-size: 1rem;
-}
-
-.styled-list li i {
-    margin-right: 10px;
-    color: var(--secondary-color);
-    width: 24px;
-    text-align: center;
-}
-
-/* サブセクション */
-.subsection {
-    margin-bottom: 20px;
-}
-
-.subsection h3 {
-    font-size: 1.2rem;
-    font-weight: 700;
-    color: var(--primary-color);
-    margin-bottom: 10px;
-}
-
-/* 例 */
-.example-title {
-    font-weight: bold;
-    color: var(--accent-color);
-    margin-top: 15px;
-    margin-bottom: 5px;
-}
-
-/* レスポンシブデザイン */
-@media (max-width: 1500px) {
-    .container {
-        padding: 10px;
+/* ------------------------------------------- */
+/* --- モバイル向け特化スタイル (767px以下) --- */
+/* ------------------------------------------- */
+@media (max-width: 767px) {
+    body {
+        font-size: 15px;
+        line-height: 1.65;
     }
 
-    header h1 {
-        font-size: 2rem;
+    .container {
+        padding: 0 10px;
     }
 
     .section {
-        padding: 20px;
+        padding: 20px 15px;
+        margin-bottom: 20px;
+    }
+
+    .section:hover {
+        /* モバイルではホバー時のtransformを無効化することも検討 */
+        transform: none;
     }
 
     .section h2 {
-        font-size: 1.4rem;
+        font-size: 1.45rem;
+        margin-bottom: 12px;
+        padding-bottom: 6px;
     }
 
-    .styled-list li {
-        font-size: 0.9rem;
-    }
-
-   /* くぅーボタンセクションのスタイル */
-   #kuu-button-section {
+    /* くぅーボタンセクションのスタイル */
+    #kuu-button-section {
         text-align: center;
-        padding: 50px;
-        /* パディングを大きく */
+        padding: 25px 15px;
         background-color: #f0f0f0;
-        /* 背景色を少し変更 */
-        border-radius: 15px;
-        /* 角を丸く */
-        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-        /* 影を大きく */
+        border-radius: 12px;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
         position: relative;
-        /* パーティクル表示の基準位置 */
         overflow: hidden;
-
-        display: flex; /* Flexboxを使用 */
-        flex-direction: column; /* 縦方向に要素を並べる */
-        align-items: center; /* 水平方向中央揃え */
-    }
-
-    /* レベル、称号などのスタイル */
-    #kuu-button-section .status-display {
-        font-size: 1.2rem;
-        margin-top: 15px;
-        color: #555;
         display: flex;
-        /* Flexboxを使用 */
+        flex-direction: column;
         align-items: center;
-        /* 垂直方向中央揃え */
-        justify-content: center;
-        /* 水平方向中央揃え */
-        text-align: center;
     }
 
-    #kuu-button-section .status-display i {
-        margin-right: 8px;
-        /* アイコンとテキストの間隔 */
-        color: var(--secondary-color);
-        /* アイコンの色 */
-        font-size: 1.4rem;
-        /* アイコンのサイズ */
+    #kuu-button-section h2 {
+        font-size: 1.5rem;
     }
 
-    #kuu-button-section .status-display span {
-        font-family: 'M PLUS Rounded 1c', sans-serif;
-        /* 丸ゴシック体に変更 */
-        font-weight: bold;
-        /* 太字 */
-        color: var(--primary-color);
-        /* メインカラー */
-        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
-        /* 文字に影を追加 */
-    }
-
-    #kuu-button-section p {
-        font-size: 1.2rem;
-        margin-top: 10px;
-        color: #555;
+    #kuu-button-section > p {
+        /* 説明文 */
+        font-size: 0.9rem;
+        line-height: 1.6;
+        margin-bottom: 20px;
+        color: #444;
     }
 
     #kuu-button {
-        font-size: 1.5rem;
-        /* ボタンのフォントサイズをさらに小さく */
-        padding: 15px 30px; /* パディングを大きく */
+        font-size: 1.4rem;
+        padding: 12px 28px;
         background-color: var(--accent-color);
         color: #fff;
         border: none;
-        border-radius: 15px;
-        /* 角を丸く */
+        border-radius: 12px;
         cursor: pointer;
         transition: all 0.2s ease-in-out;
-        /* トランジションを滑らかに */
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-        /* 影を追加 */
+        /* transform 以外の transition も含む */
+        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.25);
         font-family: 'M PLUS 1p', sans-serif;
-        /* 少しPOPなフォントに変更 */
-        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-        /* 文字に影を追加 */
+        text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
         position: relative;
-        /* 疑似要素の基準位置 */
         overflow: hidden;
-        /* 範囲外を隠す */
-        position: relative;
-        /* z-indexを有効にするために必要 */
         z-index: 2;
-        /* Canvasよりも背面に表示 */
+        margin-bottom: 15px;
     }
 
-    /* レベルアップ時のアニメーション */
-    @keyframes levelUp {
-        0% {
-            transform: scale(1);
-            opacity: 1;
-        }
-
-        50% {
-            transform: scale(1.2);
-            opacity: 0.8;
-        }
-
-        100% {
-            transform: scale(1);
-            opacity: 1;
-        }
-    }
-
-    .level-up-animation {
-        animation: levelUp 0.5s ease-in-out;
-    }
-
-    /* ボタン押下時のアニメーション */
     #kuu-button:hover {
-        transform: scale(1.1);
-        /* 少し拡大 */
-        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5);
-        /* 影を強調 */
+        /* transform: scale(1.05); */
+        /* モバイルで不要ならコメントアウト */
+        /* box-shadow: 0 5px 10px rgba(0, 0, 0, 0.4); */
     }
 
     #kuu-button:active {
-        transform: scale(0.95); /* ほんの少し縮小 */
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-        /* 影を弱める */
+        transform: scale(0.98);
+        /* タップ感は残す */
+        /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4); */
     }
 
-    #reset-button:active {
-        transform: scale(0.95); /* ほんの少し縮小 */
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-        /* 影を弱める */
-    }
-
-    /* 疑似要素でリップルエフェクト */
     #kuu-button::after {
         content: "";
         display: block;
@@ -271,52 +166,41 @@ main {
         width: 100%;
         height: 100%;
         background-color: rgba(255, 255, 255, 0.3);
-        /* 白色の半透明 */
         opacity: 0;
         transition: opacity 0.3s ease;
         border-radius: 50%;
         transform: scale(5);
-        /* 大きく拡大 */
         pointer-events: none;
-        /* イベントを透過 */
     }
 
     #kuu-button:active::after {
         opacity: 1;
-        /* 表示 */
         transition: opacity 0s ease;
-        /* 即時 */
     }
 
-    /* 無効化されたボタンのスタイル */
     #kuu-button:disabled {
-        cursor: not-allowed; /* カーソルを押せないマークに変更 */
-        opacity: 0.5; /* 透明度を下げて無効化を強調 */
-        transform: none !important; /* ホバーやクリック時の拡大を無効化 */
-        box-shadow: none !important; /* 影を消す */
+        cursor: not-allowed !important;
+        opacity: 0.5 !important;
+        transform: none !important;
+        box-shadow: none !important;
     }
 
-    /* :disabled の場合は疑似要素のリップルエフェクトも無効化 */
     #kuu-button:disabled::after {
-        display: none; /* エフェクトを表示させない */
+        display: none !important;
     }
+
 
     #kuu-text {
         font-weight: 900;
         animation: pulse 1s infinite alternate;
-        font-size: 9rem;
-        /* テキストのフォントサイズをさらに大きく */
+        font-size: 5.5rem;
         margin-top: 10px;
-        /* マージンを調整 */
+        margin-bottom: 20px;
         color: var(--accent-color);
-        /* テキストの色を変更 */
-        text-shadow: 4px 4px 6px rgba(0, 0, 0, 0.6);
-        /* シャドウをさらに強く */
-        letter-spacing: 0.2rem;
-        /* 文字間隔を少し広げる */
+        text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.5);
+        letter-spacing: 0.1rem;
     }
 
-    /* パルスアニメーション */
     @keyframes pulse {
         0% {
             transform: scale(1);
@@ -327,373 +211,147 @@ main {
         }
     }
 
-    /* レベル、称号などのスタイル */
+    #kuu-button-section .status-display {
+        font-size: 1.05rem;
+        margin-top: 12px;
+        color: #555;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        width: 100%;
+    }
+
+    #kuu-button-section .status-display i {
+        margin-right: 6px;
+        color: var(--secondary-color);
+        font-size: 1.25rem;
+    }
+
+    #kuu-button-section .status-display span {
+        font-family: 'M PLUS Rounded 1c', sans-serif;
+        font-weight: bold;
+        color: var(--primary-color);
+        text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.15);
+    }
+
     #kuu-button-section p {
-        font-size: 1.2rem;
-        margin-top: 10px;
+        font-size: 1rem;
+        margin-top: 8px;
         color: #555;
     }
 
-    /* リセットボタンのスタイル */
     #reset-button {
-        padding: 15px 30px;
-        /* パディングを大きく */
+        padding: 10px 25px;
         background-color: #ddd;
         border: none;
-        border-radius: 10px;
-        /* 角を丸く */
+        border-radius: 8px;
         cursor: pointer;
-        margin-top: 30px;
-        /* マージンを大きく */
+        margin-top: 25px;
         transition: background-color 0.3s ease;
-        /* トランジションを追加 */
-        font-size: 1.1rem;
-        /* フォントサイズを少し大きく */
+        font-size: 0.95rem;
     }
 
     #reset-button:hover {
         background-color: #bbb;
-        /* ホバー時に色を変更 */
     }
 
-    /* 発音ボタンのスタイル（モバイル向け） */
-    .pronunciation-button {
-        background-color: #3CB371; /* 背景色を濃い緑色にする */
-        color: #fff; /* 文字色を白にする */
-        border: none; /* 枠線を消す */
-        padding: 12px 24px; /* パディング（余白）を大きくする */
-        border-radius: 12px; /* 角を丸くする */
-        cursor: pointer; /* カーソルをポインター（指マーク）にする */
-        font-size: 1rem; /* フォントサイズを大きくする */
-        transition: background-color 0.3s ease; /* ホバー時のアニメーションを追加 */
-        margin-left: 10px; /* IPA表記との間隔を調整 */
-        box-shadow: 3px 3px 7px rgba(0, 0, 0, 0.2); /* 影を追加 */
-        -webkit-tap-highlight-color: transparent; /* タップ時のハイライトを消す（iOS） */
-        -webkit-appearance: none; /* デフォルトスタイルをリセット */
-        display: inline-flex; /* アイコンとテキストを横並びにする */
-        align-items: center; /* 垂直方向に中央揃え */
-        justify-content: center; /* 水平方向に中央揃え */
+    #reset-button:active {
+        transform: scale(0.96);
+        /* box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4); */
     }
 
-    .pronunciation-button:hover {
-        background-color: #6B8E23; /* ホバー時の背景色を少し濃くする */
-    }
 
-    .pronunciation-button:active {
-        transform: scale(0.95); /* タップ時に少し縮小 */
-        box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3); /* タップ時に影を弱める */
-    }
-
-    .pronunciation-button i {
-        margin-right: 8px; /* アイコンとテキストの間隔を調整 */
-        font-size: 1.2rem; /* アイコンのサイズを大きくする */
-    }
-
-    .pronunciation-button:active {
-        background-color: #558B2F; /* タップ時に背景色を少し暗くする */
-        transform: scale(0.95); /* タップ時に少し縮小 */
-        box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3); /* タップ時に影を弱める */
-    }
-
-    .level-up-popup {
-        position: fixed; /* 画面に固定 */
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%); /* 中央配置 */
-        background-color: rgba(0, 0, 0, 0.8); /* 半透明の黒 */
-        color: white; /* 文字色を白に */
-        padding: 20px;
-        border-radius: 10px;
-        z-index: 1001; /* 他の要素よりも前面に表示 */
-        font-size: 1.5rem;
-        font-weight: bold;
-        text-align: center;
-        opacity: 0; /* 初期状態では非表示 */
-        visibility: hidden;
-        transition: opacity 0.3s ease-out, visibility 0.3s ease-out; /* スムーズな非表示のため */
-    }
-    
-    @keyframes popup-jump {
-        0% {
-            opacity: 0;
-            visibility: visible;
-            transform: translate(-50%, -40%); /* 少し上に配置 */
-        }
-        50% {
-            opacity: 1;
-            transform: translate(-50%, -55%); /* 一番上に跳ね上がる */
-        }
-        100% {
-            opacity: 1;
-            transform: translate(-50%, -50%); /* 元の位置に戻る */
-        }
-    }
-    
-    .level-up-popup.hidden {
-        opacity: 0;
-        visibility: hidden;
-    }
-
-    .level-up-popup.active {
-        visibility: visible;
-        opacity: 1;
-        animation: popup-jump 0.5s ease-out;
-    }
-
-    /* パーティクルCanvasのスタイル */
-    #particle-canvas {
-        position: absolute;
-        top: 0;
-        left: 0;
-        pointer-events: none;
-        /* イベントを透過 */
-        z-index: 1;
-        /* ボタンよりも前面に表示 */
-    }
-
-    /* ログインしていない時の表示 */
     .not-logged-in {
-        background-color: #f8f9fa; /* 優しいグレーの背景色 */
-        border: 2px dashed #6c757d; /* ダッシュの枠線で軽い印象 */
-        border-radius: 10px; /* 角を丸くする */
-        padding: 20px;
+        background-color: #f8f9fa;
+        border: 1px solid #ced4da;
+        border-radius: 8px;
+        padding: 20px 15px;
         text-align: center;
         margin: 20px auto;
-        max-width: 600px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 軽い影を追加 */
+        max-width: 90%;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
     }
 
     .not-logged-in .notice {
-        font-size: 1.2rem;
+        font-size: 1.1rem;
         font-weight: bold;
-        color: #dc3545; /* 赤系の色で注意を強調 */
+        color: #dc3545;
         margin-bottom: 15px;
     }
 
-    .not-logged-in .btn {
-        display: inline-block;
-        background-color: #007bff; /* ブルーのボタン */
-        color: #fff;
-        padding: 10px 20px;
+    .not-logged-in .btn.stylish-button,
+    .not-logged-in .btn.register-link {
+        display: block;
+        width: 100%;
+        max-width: 280px;
+        margin: 10px auto;
+        padding: 12px 15px;
+        font-size: 1rem;
+        text-align: center;
         border-radius: 5px;
         text-decoration: none;
         font-weight: bold;
         transition: background-color 0.3s ease;
     }
 
-    .not-logged-in .btn:hover {
-        background-color: #0056b3; /* ホバー時に濃いブルー */
+    .not-logged-in .btn.stylish-button {
+        background-color: #007bff;
+        color: #fff;
+    }
+
+    .not-logged-in .btn.stylish-button:hover {
+        background-color: #0056b3;
     }
 
     .not-logged-in .register-prompt {
-        font-size: 1rem;
-        color: #6c757d; /* 落ち着いたグレー */
+        font-size: 0.95rem;
+        color: #6c757d;
         margin-top: 15px;
     }
 
-    .not-logged-in .register-link {
-        color: white; /* 緑色でリンクを目立たせる */
-        font-weight: bold;
-        text-decoration: none;
-        transition: color 0.3s ease;
+    .not-logged-in .btn.register-link {
+        background-color: #28a745;
+        color: white;
     }
 
-    
-
-    /* 登録ページのスタイル */
-    .styled-form {
-        max-width: 500px;
-        margin: 0 auto;
-        padding: 20px;
-        background-color: #f8f9fa;
-        border-radius: 10px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    .not-logged-in .btn.register-link:hover {
+        background-color: #1e7e34;
     }
 
-    .form-group {
-        margin-bottom: 15px;
+
+    /* ランキングセクションのスタイル修正 */
+    #kuu-ranking h2 {
+        /* セクションタイトル */
+        font-size: 1.45rem;
+        /* 他のセクションと合わせる */
     }
 
-    .form-label {
-        display: block;
-        font-weight: bold;
-        margin-bottom: 5px;
-        color: #333;
-    }
-
-    .form-input {
-        width: 100%;
-        padding: 10px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        font-size: 1rem;
-    }
-
-    .form-input:focus {
-        border-color: #007bff;
-        outline: none;
-        box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
-    }
-
-    .form-error {
-        color: #dc3545;
-        font-size: 0.875rem;
-        margin-top: 5px;
-    }
-
-    .form-actions {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-top: 20px;
-    }
-
-    .btn-link {
-        color: #007bff;
-        text-decoration: none;
-        font-size: 0.875rem;
-    }
-
-    .btn-link:hover {
-        text-decoration: underline;
-    }
-
-    .btn-primary {
-        background-color: #007bff;
-        color: #fff;
-        padding: 10px 20px;
-        border: none;
-        border-radius: 5px;
-        font-size: 1rem;
-        cursor: pointer;
-        transition: background-color 0.3s ease;
-    }
-
-    .btn-primary:hover {
-        background-color: #0056b3;
-    }
-
-    /* ログインページのスタイル */
-    .styled-form {
-        max-width: 500px;
-        margin: 0 auto;
-        padding: 20px;
-        background-color: #f8f9fa;
-        border-radius: 10px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    }
-
-    .form-group {
-        margin-bottom: 15px;
-    }
-
-    .form-label {
-        display: block;
-        font-weight: bold;
-        margin-bottom: 5px;
-        color: #333;
-    }
-
-    .form-input {
-        width: 100%;
-        padding: 10px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        font-size: 1rem;
-    }
-
-    .form-input:focus {
-        border-color: #007bff;
-        outline: none;
-        box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
-    }
-
-    .form-checkbox {
-        margin-right: 10px;
-    }
-
-    .form-error {
-        color: #dc3545;
-        font-size: 0.875rem;
-        margin-top: 5px;
-    }
-
-    .form-actions {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-top: 20px;
-    }
-
-    .btn-link {
-        color: #007bff;
-        text-decoration: none;
-        font-size: 0.875rem;
-    }
-
-    .btn-link:hover {
-        text-decoration: underline;
-    }
-
-    .btn-primary {
-        background-color: #007bff;
-        color: #fff;
-        padding: 10px 20px;
-        border: none;
-        border-radius: 5px;
-        font-size: 1rem;
-        cursor: pointer;
-        transition: background-color 0.3s ease;
-    }
-
-    .btn-primary:hover {
-        background-color: #0056b3;
-    }
-
-    /* アカウント作成ボタンのスタイル */
-    .register-prompt {
-        text-align: center;
-        margin-top: 20px;
-        font-size: 1rem;
-        color: #6c757d;
-    }
-
-    .register-prompt a {
-        display: inline-block;
-        margin-top: 10px;
-        padding: 10px 20px;
-        background-color: #28a745; /* 緑色のボタン */
-        color: #fff;
-        text-decoration: none;
-        border-radius: 5px;
-        font-weight: bold;
-        transition: background-color 0.3s ease;
-    }
-
-    .register-prompt a:hover {
-        background-color: #218838; /* ホバー時に濃い緑色 */
-    }
-
-    /* ランキングセクションのスタイル */
     .ranking-container {
-        padding: 0 15px;
+        padding: 0;
+        /* 親の .section のパディングに任せるか、微調整 */
     }
 
     .ranking-item {
         display: flex;
-        align-items: center;
-        padding: 15px;
-        margin-bottom: 15px;
-        border-radius: 15px;
+        /* 基本は横並び */
+        align-items: flex-start; /* 称号が複数行になった場合に上揃えにするため変更 */
+        padding: 12px 10px;
+        margin-bottom: 12px;
+        border-radius: 10px;
         background: #f9f9f9;
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
         position: relative;
         overflow: hidden;
+        /* はみ出し防止 */
+        transition: none;
+        /* モバイルではホバー時のtransitionは不要な場合が多い */
     }
 
     .ranking-item:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05);
+        /* モバイルでのホバーエフェクトなし */
+        transform: none;
+        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.08);
+        /* 通常の影 */
     }
 
     .ranking-item::before {
@@ -701,113 +359,112 @@ main {
         position: absolute;
         top: 0;
         left: 0;
-        width: 5px;
+        width: 4px;
         height: 100%;
         background: #e0e0e0;
     }
 
     .rank-number {
-        width: 50px;
-        height: 50px;
+        width: 40px;
+        height: 40px;
         background: #f3f3f3;
         border-radius: 50%;
         display: flex;
         justify-content: center;
         align-items: center;
         font-weight: bold;
-        font-size: 20px;
-        margin-right: 15px;
+        font-size: 1rem;
+        margin-right: 10px;
+        /* ユーザー情報との間隔 */
         color: #555;
         box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.05);
-        position: relative;
-        z-index: 1;
+        flex-shrink: 0;
+        /* 縮まないように */
+        margin-top: 0; /* align-items: flex-start に対応 */
     }
 
     .user-info {
         flex: 1;
-        margin-right: 15px;
+        /* 残りのスペースを埋める */
+        min-width: 0;
+        /* flexアイテムがはみ出るのを防ぐ */
+        margin-right: 8px;
+        /* くぅーカウントとの間隔 */
+        text-align: left;
     }
 
     .username {
-        font-size: 18px;
+        font-size: 1rem;
+        /* 少し小さく調整 */
         font-weight: 600;
         color: #333;
-        margin-bottom: 5px;
+        margin-bottom: 4px; /* 称号との間隔を少し広げる */
         display: block;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        /* 長いユーザー名対策 */
     }
 
     .status-info {
         display: flex;
-        align-items: center;
-        gap: 12px;
+        flex-direction: column; /* レベルと称号を縦に並べる */
+        align-items: flex-start; /* 左揃え */
+        gap: 2px; /* レベルと称号の間のギャップを調整 */
     }
 
     .level {
         background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
         color: white;
-        padding: 3px 10px;
-        border-radius: 20px;
-        font-size: 12px;
+        padding: 2px 7px;
+        border-radius: 15px;
+        font-size: 0.7rem;
         font-weight: 500;
+        white-space: nowrap;
+        /* Lv.XX が改行しないように */
     }
 
     .title {
-        font-size: 14px;
+        font-size: 0.8rem;
         color: #666;
         font-weight: 500;
+        white-space: normal;   /* 折り返しを許可 */
+        overflow: visible;     /* はみ出しを許可 (念のため) */
+        text-overflow: clip;   /* ellipsisを解除 */
+        line-height: 1.3;      /* 複数行になった場合の行間を調整 */
+        /* word-break: break-all; */ /* 必要であれば単語の途中でも改行を許可 */
     }
 
     .kuu-count {
         display: flex;
         align-items: center;
         background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
-        padding: 8px 15px;
-        border-radius: 20px;
+        padding: 5px 10px;
+        border-radius: 15px;
         color: white;
         font-weight: bold;
         box-shadow: 0 5px 15px rgba(253, 160, 133, 0.3);
+        flex-shrink: 0;
+        /* 縮まないように */
+        text-align: right;
+        /* 数字を右寄せに */
+        margin-top: 0; /* align-items: flex-start に対応 */
+        /* align-self: center; */ /* もしカウント部分を中央に寄せたい場合 */
     }
 
     .kuu-count i {
-        margin-right: 5px;
-        animation: pulse 1.5s infinite;
+        margin-right: 4px;
+        font-size: 0.8rem;
+        /* animation: pulse 1.5s infinite; */
     }
 
-    .fas.fa-crown {
-        font-size: 24px;
+    .kuu-count span {
+        font-size: 0.8rem;
+        white-space: nowrap;
+        /* 「〇〇回くぅーしました」が改行しないように */
     }
 
-    .gold {
-        color: #FFD700;
-        text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
-        animation: shine 2s infinite;
-    }
-
-    .silver {
-        color: #C0C0C0;
-    }
-
-    .bronze {
-        color: #CD7F32;
-    }
-
-    .current-user {
-        background: linear-gradient(to right, rgba(106, 17, 203, 0.05), rgba(37, 117, 252, 0.05));
-        border: 2px solid rgba(106, 17, 203, 0.2);
-        position: relative;
-    }
-
-    .current-user::after {
-        content: '👑';
-        position: absolute;
-        top: -12px;
-        right: 20px;
-        font-size: 24px;
-        transform: rotate(15deg);
-        animation: float 3s ease-in-out infinite;
-    }
-
-    /* Top 3 Styles */
+    /* Top 3 アイコン等のスタイルは既存のものをベースに微調整 */
     .ranking-item:nth-child(1) .rank-number,
     .ranking-item:nth-child(2) .rank-number,
     .ranking-item:nth-child(3) .rank-number {
@@ -839,63 +496,167 @@ main {
         background: #CD7F32;
     }
 
-    /* Animations */
-    @keyframes shine {
-        0%, 100% {
-            text-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
-        }
-        50% {
-            text-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
-        }
+    .current-user {
+        /* 自分のランキングを少し目立たせる */
+        background: linear-gradient(to right, rgba(106, 17, 203, 0.03), rgba(37, 117, 252, 0.03));
+        border: 1px solid rgba(106, 17, 203, 0.1);
     }
 
-    @keyframes pulse {
-        0%, 100% {
-            transform: scale(1);
-        }
-        50% {
-            transform: scale(1.2);
-        }
+    .current-user::after {
+        /* 王冠の位置やサイズ調整 */
+        content: '👑';
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        font-size: 1.1rem;
+        transform: rotate(10deg);
+        /* animation: float 3s ease-in-out infinite; */
+        /* モバイルではアニメーションオフも検討 */
+    }
+}
+
+/* 既存の @media (max-width: 600px) のランキング特定スタイルは、上記の767pxに統合。 */
+/* もし600px以下でさらにレイアウト変更（例：縦積み）が必要な場合は別途記述 */
+@media (max-width: 600px) {
+    /* 例: 600px以下でアイテムを縦積みにする場合 (必要に応じてコメント解除) */
+    /*
+    .ranking-item {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+    .rank-number {
+        margin-right: 0;
+        margin-bottom: 8px;
+    }
+    .user-info {
+        margin-right: 0;
+        margin-bottom: 8px;
+        text-align: center;
+        width: 100%;
+    }
+    .status-info {
+        justify-content: center;
+    }
+    .kuu-count {
+        margin-top: 5px;
+    }
+    .current-user::after {
+        top: -8px; left: 50%; transform: translateX(-50%) rotate(10deg);
+    }
+    */
+}
+
+
+/* ------------------------------------------------- */
+/* --- さらに小さい画面向け (例: 400px以下) の調整 --- */
+/* ------------------------------------------------- */
+@media (max-width: 400px) {
+    body {
+        font-size: 14px;
     }
 
-    @keyframes float {
-        0%, 100% {
-            transform: translateY(0) rotate(15deg);
-        }
-        50% {
-            transform: translateY(-10px) rotate(15deg);
-        }
+    .section h2 {
+        font-size: 1.3rem;
     }
 
-    /* Responsive Design */
-    @media (max-width: 600px) {
-        .section {
-            border-radius: 15px;
-        }
+    #kuu-button-section h2 {
+        font-size: 1.35rem;
+    }
 
-        .ranking-item {
-            flex-direction: column;
-            text-align: center;
-            padding: 20px 10px;
-        }
+    #kuu-button-section > p {
+        font-size: 0.85rem;
+    }
 
-        .rank-number {
-            margin-right: 0;
-            margin-bottom: 15px;
-        }
+    #kuu-button {
+        font-size: 1.25rem;
+        padding: 10px 22px;
+    }
 
-        .user-info {
-            margin-right: 0;
-            margin-bottom: 15px;
-            width: 100%;
-        }
+    #kuu-text {
+        font-size: 4.5rem;
+        margin-bottom: 15px;
+    }
 
-        .status-info {
-            justify-content: center;
-        }
+    #kuu-button-section .status-display {
+        font-size: 0.95rem;
+    }
 
-        .current-user::after {
-            right: 10px;
-        }
+    #kuu-button-section .status-display i {
+        font-size: 1.15rem;
+    }
+
+    #kuu-button-section p {
+        font-size: 0.9rem;
+    }
+
+    .not-logged-in .notice {
+        font-size: 1rem;
+    }
+
+    .not-logged-in .btn.stylish-button,
+    .not-logged-in .btn.register-link {
+        font-size: 0.9rem;
+        padding: 10px 12px;
+    }
+
+    /* ランキングの更なる調整 */
+    .rank-number {
+        width: 35px;
+        height: 35px;
+        font-size: 0.9rem;
+        margin-right: 8px;
+    }
+
+    .username {
+        font-size: 0.9rem;
+    }
+
+    .level {
+        font-size: 0.65rem;
+        padding: 2px 5px;
+    }
+
+    .title {
+        /* 767pxの変更を継承、またはここで微調整 */
+        font-size: 0.75rem;
+        white-space: normal;
+        overflow: visible;
+        text-overflow: clip;
+        line-height: 1.25;
+    }
+
+    .kuu-count {
+        padding: 4px 8px;
+    }
+
+    .kuu-count i {
+        font-size: 0.7rem;
+        margin-right: 3px;
+    }
+
+    .kuu-count span {
+        font-size: 0.75rem;
+    }
+
+    .current-user::after {
+        font-size: 1rem;
+        top: 3px;
+        right: 3px;
+    }
+
+
+    /* SweetAlert2のポップアップ */
+    .swal2-popup {
+        width: 90% !important;
+        font-size: 0.9rem !important;
+    }
+
+    .swal2-title {
+        font-size: 1.2rem !important;
+    }
+
+    .swal2-html-container {
+        font-size: 0.9rem !important;
     }
 }
