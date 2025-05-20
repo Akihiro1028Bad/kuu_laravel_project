@@ -562,3 +562,36 @@ h1, h2, h3, h4, h5, h6 {
     opacity: 0;
     transition: opacity 0.5s 0.1s ease-in; /* 少し遅れてフェードイン */
 }
+
+/* リスト */
+.styled-list {
+    list-style: none;
+    padding-left: 0;
+}
+
+.styled-list li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    font-size: 1rem;
+}
+
+.styled-list li i {
+    margin-right: 10px;
+    color: var(--secondary-color);
+    width: 24px;
+    text-align: center;
+}
+
+/* サブセクション */
+.subsection {
+    margin-bottom: 20px;
+}
+
+.subsection h3 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin-bottom: 10px;
+}
+
