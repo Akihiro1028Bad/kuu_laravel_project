@@ -4,7 +4,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TopDocumentController;
 use App\Http\Controllers\KuuDocumentController;
 use App\Http\Controllers\kuuButtonController;
-use App\Http\Controllers\MypageController;
+use App\Http\Controllers\MyPageController;
 use Illuminate\Support\Facades\Route;
 
 // トップ画面
@@ -37,7 +37,7 @@ Route::middleware('auth')->group(function () {
 
     // マイページ
     Route::prefix('/mypage')->name('mypage.')->group(function () {
-        Route::controller(MypageController::class)->group(function () {
+        Route::controller(MyPageController::class)->group(function () {
             Route::get('{user_id}', 'index')->name('index'); // マイページ閲覧
         });
     });
