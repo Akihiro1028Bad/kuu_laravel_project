@@ -1,0 +1,156 @@
+/* mypage_v2.css */
+
+.profile-card-v2 {
+    background-color: var(--white);
+    border-radius: 16px; /* 角丸を少し大きくして柔らかさを */
+    box-shadow: 0 8px 25px rgba(0, 51, 102, 0.08), 0 4px 10px rgba(0, 51, 102, 0.05); /* 影をよりソフトに、レイヤー感を出す */
+    overflow: hidden; /* 子要素のborder-radiusを制御 */
+    border: 1px solid var(--medium-gray);
+}
+
+.profile-card-header {
+    display: flex;
+    align-items: center;
+    padding: 1.25rem 1.5rem; /* パディング調整 */
+    background-color: rgba(0, 51, 102, 0.03); /* ヘッダーに薄い背景色 */
+    border-bottom: 1px solid var(--medium-gray);
+}
+
+.profile-avatar-v2 {
+    width: 60px; /* モバイル基準 */
+    height: 60px;
+    border-radius: 50%;
+    background-color: var(--primary-color);
+    color: var(--white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+.profile-avatar-v2 img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+.profile-avatar-v2 i {
+    font-size: 1.8rem; /* アイコンサイズ調整 */
+}
+
+@media (min-width: 768px) { /* md以上 */
+    .profile-avatar-v2 {
+        width: 70px;
+        height: 70px;
+    }
+    .profile-avatar-v2 i {
+        font-size: 2.2rem;
+    }
+}
+
+.profile-user-info-v2 {
+    line-height: 1.3; /* ユーザー名と称号の間を詰める */
+}
+
+.profile-username-v2 {
+    font-size: 1.3rem; /* モバイル基準 */
+    font-weight: 600; /* Poppins の weight を活かす */
+    color: var(--primary-color);
+    font-family: 'Poppins', sans-serif;
+}
+
+.profile-title-v2 {
+    font-size: 0.8rem; /* モバイル基準 */
+    color: var(--secondary-color);
+    font-weight: 500;
+    font-family: 'Noto Sans JP', sans-serif;
+}
+.profile-title-v2 i {
+    font-size: 0.9em;
+    color: var(--secondary-color); /* アイコンの色も統一 */
+}
+
+@media (min-width: 768px) { /* md以上 */
+    .profile-username-v2 {
+        font-size: 1.6rem;
+    }
+    .profile-title-v2 {
+        font-size: 0.9rem;
+    }
+}
+
+.profile-edit-btn-v2 {
+    background-color: var(--white);
+    color: var(--primary-color);
+    border: 1px solid var(--medium-gray);
+    padding: 0.5rem 0.8rem; /* 少し小さめに */
+    font-size: 0.85rem;
+    font-weight: 500;
+    border-radius: 8px; /* btnスタイルと合わせる */
+    flex-shrink: 0; /* 右に寄せるために必要 */
+}
+.profile-edit-btn-v2:hover {
+    background-color: var(--light-gray);
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+}
+.profile-edit-btn-v2 i {
+    font-size: 0.9em;
+}
+
+/* 統計情報 */
+.profile-card-body {
+    padding: 1.5rem;
+}
+
+.stat-item-v2 {
+    display: flex;
+    align-items: center;
+    background-color: var(--light-gray); /* 各統計アイテムに背景 */
+    padding: 0.75rem 1rem;
+    border-radius: 10px;
+    transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
+}
+.stat-item-v2:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.07);
+}
+
+.stat-icon-v2 {
+    font-size: 1.4rem; /* アイコンサイズ */
+    margin-right: 0.75rem;
+    width: 30px; /* アイコンの占める幅を固定 */
+    text-align: center;
+}
+
+.stat-value-v2 {
+    font-size: 1.2rem; /* 数値を大きく */
+    font-weight: 700; /* Poppins強調 */
+    color: var(--primary-color);
+    font-family: 'Poppins', sans-serif;
+    line-height: 1.1;
+}
+.stat-value-v2 small {
+    font-size: 0.7em;
+    font-weight: 500;
+    color: var(--dark-gray);
+}
+
+.stat-label-v2 {
+    font-size: 0.75rem;
+    color: var(--dark-gray);
+    font-family: 'Noto Sans JP', sans-serif;
+    line-height: 1.2;
+}
+
+@media (min-width: 768px) { /* md以上 */
+    .stat-icon-v2 {
+        font-size: 1.6rem;
+    }
+    .stat-value-v2 {
+        font-size: 1.4rem;
+    }
+    .stat-label-v2 {
+        font-size: 0.8rem;
+    }
+}

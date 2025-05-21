@@ -15,6 +15,9 @@
         <i class="fas fa-times"></i>
     </button>
     <ul class="nav-links">
+        @auth
+            <li><a href="{{route('mypage.index', ['user_id' => Auth::id()])}}">マイページ</a></li>
+        @endauth
         <li><a href="{{route('kuuDocument_index')}}">ドキュメント</a></li>
         <li><a href="{{route('kuuButton_index')}}">くぅーする</a></li>
         <li><a href="#">ランキング</a></li>

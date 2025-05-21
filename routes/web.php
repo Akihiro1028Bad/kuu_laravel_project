@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TopDocumentController;
 use App\Http\Controllers\KuuDocumentController;
 use App\Http\Controllers\kuuButtonController;
+use App\Http\Controllers\MypageController;
 use Illuminate\Support\Facades\Route;
 
 // トップ画面
@@ -31,6 +32,13 @@ Route::middleware('auth')->group(function () {
             Route::post('{user_id}/count-up', 'countUp')->name('countUp'); // クゥーボタン押下時にカウントを更新
             Route::post('{user_id}/level-up', 'levelUp')->name('levelUp'); // クゥーレベルアップ
             Route::get('get_ranking_list', 'getRankingList')->name('getRankingList'); // ランキングリスト取得
+        });
+    });
+
+    // マイページ
+    Route::prefix('/mypage')->name('mypage.')->group(function () {
+        Route::controller(MypageController::class)->group(function () {
+            Route::get('{user_id}', 'index')->name('index'); // マイページ閲覧
         });
     });
 });
