@@ -7,6 +7,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Log;
 use Illuminate\View\View;
 use App\Models\User;
 use App\Models\UserKuuStatus;
@@ -45,5 +46,29 @@ class MyPageController extends Controller
 
         // マイページ編集画面を表示する
         return view('mypage.edit')->with(compact('user'));
+    }
+
+    /**
+     * プロフィール更新処理
+     *
+     * @param ProfileUpdateRequest $request
+     * @param int $userId
+     * @return RedirectResponse
+     */
+    public function update(ProfileUpdateRequest $request, $userId)
+    {
+        // ユーザー情報を取得する
+        $user = $this->userModel->findOrFail($userId);
+
+        // ユーザー情報を更新する
+        try {
+            $this->userModel->updateProfile($user, $request);
+        } catch (\Exception $e) {
+            // エラーメッセージを表示する
+            return Redirect::back()->withErrors(['error' => 'プロフィールの更新に失敗しました']);
+        }
+
+        // マイページにリダイレクトする
+        return Redirect::route('mypage.index', ['user_id' => Auth::id()])->with('success', 'プロフィールが更新されました');
     }
 }

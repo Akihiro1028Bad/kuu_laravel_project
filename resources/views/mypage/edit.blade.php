@@ -15,11 +15,11 @@
             <h2 class="edit-profile-title">プロフィール編集</h2>
         </div>
 
-        <form class="edit-profile-form" action="#" method="POST" enctype="multipart/form-data">
+        <form class="edit-profile-form" action="{{ route('mypage.update', $user->id) }}" method="POST" enctype="multipart/form-data">
             <!-- CSRFトークン (Laravelの場合) -->
-            <!-- @csrf -->
+            @csrf
             <!-- Method Spoofing (Laravelの場合) -->
-            <!-- @method('PUT') -->
+            @method('PUT')
 
             <!-- Avatar Edit -->
             <div class="form-group avatar-edit-group">
@@ -40,13 +40,13 @@
             <!-- Username -->
             <div class="form-group">
                 <label for="name">ユーザー名</label>
-                <input type="text" id="name" name="name" class="form-control-custom" value="現在のユーザー名" required>
+                <input type="text" id="name" name="name" class="form-control-custom" value="{{ old('name', $user->name) }}" required>
             </div>
 
             <!-- Email -->
             <div class="form-group">
                 <label for="email">メールアドレス</label>
-                <input type="email" id="email" name="email" class="form-control-custom" value="user@example.com" required>
+                <input type="email" id="email" name="email" class="form-control-custom" value="{{ old('email', $user->email) }}" required>
             </div>
 
             <!-- Bio/Profile Text -->
@@ -55,11 +55,12 @@
                 <textarea id="bio" name="bio" class="form-control-custom" rows="4" placeholder="例: Kuuが大好きです！よろしくお願いします。">{{-- {{ old('bio', $user->bio) }} --}}</textarea>
             </div>
 
-            <hr class="my-4">
-            <p class="mb-3" style="font-weight: 500; color: var(--primary-color);">パスワード変更 (変更する場合のみ入力)</p>
+            <!-- パスワード変更についてはとりあえずなしにしておく -->
+            <!-- <hr class="my-4">
+            <p class="mb-3" style="font-weight: 500; color: var(--primary-color);">パスワード変更 (変更する場合のみ入力)</p> -->
 
             <!-- Current Password -->
-            <div class="form-group">
+            <!-- <div class="form-group">
                 <label for="current_password">現在のパスワード</label>
                 <div class="password-toggle-group">
                     <input type="password" id="current_password" name="current_password" class="form-control-custom" autocomplete="current-password">
@@ -67,10 +68,10 @@
                         <i class="fas fa-eye"></i>
                     </button>
                 </div>
-            </div>
+            </div> -->
 
             <!-- New Password -->
-            <div class="form-group">
+            <!-- <div class="form-group">
                 <label for="new_password">新しいパスワード</label>
                     <div class="password-toggle-group">
                     <input type="password" id="new_password" name="new_password" class="form-control-custom" autocomplete="new-password">
@@ -79,10 +80,10 @@
                     </button>
                 </div>
                 <small class="form-text-custom">8文字以上で設定してください。</small>
-            </div>
+            </div> -->
 
             <!-- Confirm New Password -->
-            <div class="form-group">
+            <!-- <div class="form-group">
                 <label for="new_password_confirmation">新しいパスワード (確認)</label>
                 <div class="password-toggle-group">
                     <input type="password" id="new_password_confirmation" name="new_password_confirmation" class="form-control-custom" autocomplete="new-password">
@@ -90,11 +91,11 @@
                         <i class="fas fa-eye"></i>
                     </button>
                 </div>
-            </div>
+            </div> -->
 
             <!-- Form Actions -->
             <div class="form-actions">
-                <a href="#" class="btn-custom btn-cancel-custom"> <!-- マイページに戻る想定 -->
+                <a href="{{ route('mypage.index', ['user_id' => Auth::id()]) }}" class="btn-custom btn-cancel-custom">
                     <i class="fas fa-times"></i> キャンセル
                 </a>
                 <button type="submit" class="btn-custom btn-save-custom">

@@ -6,6 +6,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Log;
 
 class User extends Authenticatable
 {
@@ -50,5 +51,30 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function updateProfile($user, $request)
+    {
+        // ユーザー情報を更新する
+        $user->name = $request->name;
+        $user->email = $request->email;
+
+        // とりあえずパスワードは現状は不要
+        // パスワードが入力されている場合はハッシュ化して保存する
+        // if ($request->filled('password')) {
+        //     $user->password = bcrypt($request->password);
+        // }
+
+        // ユーザー情報を保存する
+        try {
+            $user->save();
+        } catch (\Exception $e) {
+            // エラーログを記録する
+            Log::error('ユーザー情報の更新に失敗しました。', [
+                'user_id' => $user->id,
+                'error' => $e->getMessage(),
+            ]);
+            throw $e;
+        }
     }
 }
