@@ -11,6 +11,7 @@
 .profile-card-header {
     display: flex;
     align-items: center;
+    justify-content: space-between; /* この行を追加 */
     padding: 1.25rem 1.5rem; /* パディング調整 */
     background-color: rgba(0, 51, 102, 0.03); /* ヘッダーに薄い背景色 */
     border-bottom: 1px solid var(--medium-gray);

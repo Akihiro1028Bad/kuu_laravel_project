@@ -88,4 +88,22 @@ class UserKuuStatus extends Model
             ->limit($limit)
             ->get();
     }
+
+    /**
+     * 特定のユーザーのランキング順位を取得するメソッド
+     *
+     * @param int $userId
+     * @return int|null
+     */
+    public function getUserRanking($userId)
+    {
+        $rank = $this->where('kuu_count', '>', function ($query) use ($userId) {
+                $query->select('kuu_count')
+                    ->from($this->table)
+                    ->where('user_id', $userId);
+            })
+            ->count();
+
+        return $rank + 1;
+    }
 }

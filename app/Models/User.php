@@ -12,6 +12,12 @@ class User extends Authenticatable
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
 
+    // ステータスとレベルのリレーション
+    public function userKuuStatus()
+    {
+        return $this->hasOne(UserKuuStatus::class);
+    }
+
     /**
      * The attributes that are mass assignable.
      *

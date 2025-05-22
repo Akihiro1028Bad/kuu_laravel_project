@@ -39,6 +39,8 @@ Route::middleware('auth')->group(function () {
     Route::prefix('/mypage')->name('mypage.')->group(function () {
         Route::controller(MyPageController::class)->group(function () {
             Route::get('{user_id}', 'index')->name('index'); // マイページ閲覧
+            Route::get('{user_id}/edit','edit')->name('edit'); // マイページ編集
+            Route::patch('{user_id}/update', 'update')->name('update'); // マイページ更新
         });
     });
 });
