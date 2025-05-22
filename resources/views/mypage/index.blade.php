@@ -5,9 +5,23 @@
 
 @push('styles')
     <!-- マイページ専用CSS V2 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/mypage.css') }}">
 @endpush
 
+@if (session('success'))
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>成功:</strong> {{ session('success') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+@endif
+
+@if (session('error'))
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <strong>エラー:</strong> {{ session('error') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+@endif
 <div class="container my-4 my-lg-5">
     <div class="profile-card-v2">
         <div class="profile-card-header">
@@ -26,7 +40,7 @@
             </div>
             <a href="{{ route('mypage.edit', $user->id) }}" class="btn profile-edit-btn-v2 ms-auto">
                 <i class="fas fa-user-edit"></i>
-                <span class="d-none d-md-inline ms-1">編集</span>
+                <span class="d-md-inline ms-1">編集</span>
             </a>
         </div>
 
@@ -63,4 +77,3 @@
 @push('scripts')
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 @endpush
-
