@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 
 class User extends Authenticatable
 {
@@ -28,6 +29,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'profile_image_path',
     ];
 
     /**
@@ -58,6 +60,17 @@ class User extends Authenticatable
         // ユーザー情報を更新する
         $user->name = $request->name;
         $user->email = $request->email;
+
+        if ($request->hasFile('avatar')) {
+            // 古い画像を削除（必要なら）
+            if ($user->profile_image_path) {
+                Storage::disk('s3')->delete($user->profile_image_path);
+            }
+
+            // S3へアップロード
+            $path = $request->file('avatar')->store('avatars', 's3');
+            $user->profile_image_path = $path;
+        }
 
         // とりあえずパスワードは現状は不要
         // パスワードが入力されている場合はハッシュ化して保存する
