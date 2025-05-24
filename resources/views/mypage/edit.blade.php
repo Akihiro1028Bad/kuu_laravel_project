@@ -25,12 +25,17 @@
             <div class="form-group avatar-edit-group">
                 <div class="avatar-preview-container">
                     <!-- 現在のアバター表示。$user->avatar_url があればそれを、なければプレースホルダー -->
-                    <img src="https://via.placeholder.com/100" alt="Current Avatar" id="avatarPreview" class="avatar-preview-img">
+                    <img
+                        src="{{ $user->profile_image_path ? Storage::disk('s3')->temporaryUrl($user->profile_image_path, now()->addMinutes(10)) : 'https://via.placeholder.com/100' }}"
+                        alt="Current Avatar"
+                        id="avatarPreview"
+                        class="avatar-preview-img"
+                    >
                 </div>
                 {{-- ボタンとヘルプテキストをまとめるコンテナ --}}
                 <div class="avatar-actions-container">
                     <label for="avatarUpload" class="avatar-upload-button">
-                        <i class="fas fa-camera"></i> アバターを変更
+                        <i class="fas fa-camera"></i> サムネイルを変更
                     </label>
                     <input type="file" id="avatarUpload" name="avatar" class="d-none" accept="image/*">
                     <small class="form-text-custom d-block mt-2">推奨サイズ: 200x200px, JPG, PNG</small>

@@ -28,8 +28,12 @@
             <div class="d-flex align-items-center">
                 <div class="profile-avatar-v2 me-3 me-md-4">
                     <!-- アバター画像がある場合はこちらを有効化 -->
-                    <!-- <img src="https://via.placeholder.com/100" alt="User Avatar" class="img-fluid"> -->
-                    <i class="fas fa-user fa-2x"></i>
+                    <img
+                        src="{{ $user->profile_image_path ? Storage::disk('s3')->temporaryUrl($user->profile_image_path, now()->addMinutes(10)) : 'https://via.placeholder.com/100' }}"
+                        alt="Current Avatar"
+                        id="avatarPreview"
+                        class="avatar-preview-img"
+                    >
                 </div>
                 <div class="profile-user-info-v2">
                     <h1 class="profile-username-v2 mb-0">{{ $user->name }}</h1>

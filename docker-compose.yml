@@ -8,9 +8,10 @@ services:  # ここから複数の「サービス（コンテナ）」を定義�
       dockerfile: Dockerfile  # 使用する Dockerfile のファイル名
     container_name: kuu_app  # 作成されるコンテナの名前（任意）
     ports:
-      - "8080:80"  # ホストの8000番ポート → コンテナのApacheの80番ポートに接続
+      - "8000:80"  # ホストの8000番ポート → コンテナのApacheの80番ポートに接続
     volumes:
       - .:/var/www/html  # ホストのカレントディレクトリを、コンテナのLaravel配置先にマウント
+      - ./.env:/var/www/html/.env  # ホストの.envファイルをコンテナにマウント（Laravelの環境設定）
     depends_on:
       - db  # このサービスは「db」サービス（MySQL）が起動してから動くようにする依存関係
     command: bash -c "npm install && apache2-foreground"
