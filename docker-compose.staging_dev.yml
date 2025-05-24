@@ -9,6 +9,7 @@ services:
     volumes:
       - /home/ec2-user/kuu_laravel_project:/var/www/html
       - ./.env:/var/www/html/.env  # ホストの.envファイルをコンテナにマウント（Laravelの環境設定）
+      - ./php.ini:/usr/local/etc/php/conf.d/custom-php.ini
     environment:
       - APP_ENV=staging
     restart: always
