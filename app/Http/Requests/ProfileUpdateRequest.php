@@ -29,7 +29,7 @@ class ProfileUpdateRequest extends FormRequest
                 'nullable',         // ファイルがなくてもOK
                 'image',            // 画像であること（jpeg, png, bmp, gif, svg, webp）
                 'mimes:jpg,jpeg,png',
-                'max:2048',         // 最大2MB
+                'max:51200',         // 最大50MB
             ],
         ];
     }
