@@ -12,6 +12,7 @@ services:  # ここから複数の「サービス（コンテナ）」を定義�
     volumes:
       - .:/var/www/html  # ホストのカレントディレクトリを、コンテナのLaravel配置先にマウント
       - ./.env:/var/www/html/.env  # ホストの.envファイルをコンテナにマウント（Laravelの環境設定）
+      - ./php.ini:/usr/local/etc/php/conf.d/custom-php.ini  # PHPの設定ファイルをコンテナにマウント
     depends_on:
       - db  # このサービスは「db」サービス（MySQL）が起動してから動くようにする依存関係
     command: bash -c "npm install && apache2-foreground"

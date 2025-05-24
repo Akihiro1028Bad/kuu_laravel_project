@@ -64,6 +64,10 @@ class MyPageController extends Controller
         try {
             $this->userModel->updateProfile($user, $request);
         } catch (\Exception $e) {
+            Log::error('ユーザー情報の更新に失敗しました。', [
+                'user_id' => $user->id,
+                'error' => $e->getMessage(),
+            ]);
             // エラーメッセージを表示する
             return Redirect::back()->withErrors(['error' => 'プロフィールの更新に失敗しました']);
         }
