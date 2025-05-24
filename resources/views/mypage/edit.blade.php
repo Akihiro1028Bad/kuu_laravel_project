@@ -40,6 +40,9 @@
                     <input type="file" id="avatarUpload" name="avatar" class="d-none" accept="image/*">
                     <small class="form-text-custom d-block mt-2">推奨サイズ: 200x200px, JPG, PNG</small>
                 </div>
+                @error('avatar')
+                    <div class="text-danger mt-1">{{ $message }}</div>
+                @enderror
             </div>
 
             <!-- Username -->
