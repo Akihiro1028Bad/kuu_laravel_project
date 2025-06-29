@@ -7,6 +7,8 @@ use App\Http\Controllers\kuuButtonController;
 use App\Http\Controllers\MyPageController;
 use Illuminate\Support\Facades\Route;
 
+
+
 // トップ画面
 Route::controller(TopDocumentController::class)->group(function () {
     Route::get('/', 'index')->name('index');

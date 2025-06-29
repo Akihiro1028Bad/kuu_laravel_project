@@ -23,11 +23,22 @@ if [ -f artisan ]; then
     php artisan lang:add ja
   fi
 
+  # Sanctumが未インストールなら追加
+  if ! composer show laravel/sanctum > /dev/null 2>&1; then
+    echo "🔐 Sanctum をインストール中..."
+    composer require laravel/sanctum --no-interaction
+    php artisan vendor:publish --provider="Laravel\\Sanctum\\SanctumServiceProvider" --tag=sanctum-config
+  fi
+
   # ストレージリンク作成（必要に応じて）
   if [ ! -e public/storage ]; then
     echo "🔗 storage:link 実行中..."
     php artisan storage:link
   fi
+
+  # マイグレーション実行
+  echo "🧹 マイグレーションを実行中..."
+  php artisan migrate
 
   # Laravelキャッシュをクリア
   echo "🧹 キャッシュをクリア中..."
